@@ -1556,6 +1556,222 @@ footer {
 /* ===========================================
    RESPONSIVE
 =========================================== */
+/* ===========================================
+   CALCULATOR PAGE
+=========================================== */
+.calc-wrap {
+  padding: 80px 0 100px;
+}
+.calc-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+.calc-header h2 {
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  font-weight: 300;
+  margin-bottom: 16px;
+}
+.calc-header p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  max-width: 520px;
+  margin: 0 auto;
+}
+.calc-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  max-width: 940px;
+  margin: 0 auto;
+}
+.calc-inputs {
+  background: var(--surface);
+  padding: 56px 52px;
+}
+.calc-results {
+  background: var(--surface-2);
+  padding: 56px 52px;
+  display: flex;
+  flex-direction: column;
+}
+.calc-section-label {
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 36px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.calc-section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.calc-field {
+  margin-bottom: 28px;
+}
+.calc-field label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+.calc-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.calc-input-prefix {
+  position: absolute;
+  left: 14px;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+.calc-input-suffix {
+  position: absolute;
+  right: 14px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+.calc-input {
+  width: 100%;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 300;
+  padding: 13px 16px 13px 28px;
+  outline: none;
+  transition: border-color 0.2s;
+  -moz-appearance: textfield;
+}
+.calc-input::-webkit-outer-spin-button,
+.calc-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+.calc-input:focus { border-color: var(--gold); }
+.calc-input.no-prefix { padding-left: 16px; }
+.calc-input.has-suffix { padding-right: 36px; }
+
+/* Term toggle */
+.calc-term-toggle {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+}
+.calc-term-btn {
+  flex: 1;
+  padding: 13px 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--surface-3);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.calc-term-btn.active {
+  background: var(--gold);
+  color: var(--black);
+  font-weight: 500;
+}
+
+/* Results */
+.calc-main-result {
+  margin-bottom: 40px;
+}
+.calc-main-result-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+.calc-main-result-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 5vw, 4rem);
+  font-weight: 300;
+  color: var(--soft-gold);
+  line-height: 1;
+}
+.calc-main-result-sub {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 6px;
+}
+.calc-breakdown {
+  border-top: 1px solid var(--border);
+  padding-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+.calc-breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.calc-breakdown-row .label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.calc-breakdown-row .value {
+  font-size: 0.92rem;
+  font-weight: 400;
+  color: var(--text);
+  white-space: nowrap;
+}
+.calc-breakdown-row.total-row {
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+  margin-top: 4px;
+}
+.calc-breakdown-row.total-row .label {
+  color: var(--text);
+  font-weight: 500;
+}
+.calc-breakdown-row.total-row .value {
+  color: var(--gold);
+  font-size: 1rem;
+}
+.calc-disclaimer {
+  margin-top: auto;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+.calc-cta {
+  margin-top: 48px;
+  text-align: center;
+}
+.calc-cta p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+@media (max-width: 760px) {
+  .calc-layout { grid-template-columns: 1fr; }
+  .calc-inputs, .calc-results { padding: 40px 28px; }
+}
+
 @media (max-width: 1024px) {
   .portals-grid { grid-template-columns: repeat(2, 1fr); }
   .about-pillars-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1623,6 +1839,7 @@ footer {
 
     <div class="nav-right">
       <a href="#" onclick="nav('work')" data-page="work">The Work</a>
+      <a href="#" onclick="nav('calc')" data-page="calc">Calculator</a>
       <a href="#" onclick="nav('reviews')" data-page="reviews">What They Say</a>
       <a href="#" onclick="nav('contact')" data-page="contact" class="nav-cta">Contact</a>
     </div>
@@ -1641,6 +1858,7 @@ footer {
   <a href="#" onclick="nav('services');closeMobile()" data-page="services">How I Can Help</a>
   <a href="#" onclick="nav('faq');closeMobile()" data-page="faq">FAQ</a>
   <a href="#" onclick="nav('work');closeMobile()" data-page="work">The Work</a>
+  <a href="#" onclick="nav('calc');closeMobile()" data-page="calc">Calculator</a>
   <a href="#" onclick="nav('reviews');closeMobile()" data-page="reviews">What They Say</a>
   <a href="#" onclick="nav('contact');closeMobile()" class="mobile-cta-link">Get In Touch →</a>
 </div>
@@ -2500,6 +2718,139 @@ footer {
 </div>
 
 <!-- ==========================================
+     CALCULATOR PAGE
+========================================== -->
+<div id="page-calc" class="page">
+  <div style="padding-top: var(--nav-h);">
+
+    <div class="calc-wrap">
+      <div class="container">
+
+        <div class="calc-header reveal">
+          <span class="page-eyebrow" style="justify-content:center;">Free Tool</span>
+          <h2 class="serif">Mortgage &amp; Tax<br><em style="color:var(--soft-gold);font-style:italic;">Calculator</em></h2>
+          <p>Estimate your monthly payment before your first conversation. Plug in your numbers and get an instant breakdown — principal, interest, and Illinois property taxes included.</p>
+        </div>
+
+        <div class="calc-layout reveal">
+
+          <!-- LEFT: Inputs -->
+          <div class="calc-inputs">
+            <div class="calc-section-label">Your Numbers</div>
+
+            <div class="calc-field">
+              <label>Purchase Price</label>
+              <div class="calc-input-wrap">
+                <span class="calc-input-prefix">$</span>
+                <input class="calc-input" id="calcPrice" type="number" value="500000" min="0" step="1000">
+              </div>
+            </div>
+
+            <div class="calc-field">
+              <label>Down Payment</label>
+              <div class="calc-input-wrap">
+                <span class="calc-input-prefix">$</span>
+                <input class="calc-input" id="calcDown" type="number" value="100000" min="0" step="1000">
+                <span class="calc-input-suffix" id="downPct">20%</span>
+              </div>
+            </div>
+
+            <div class="calc-field">
+              <label>Interest Rate</label>
+              <div class="calc-input-wrap">
+                <input class="calc-input no-prefix has-suffix" id="calcRate" type="number" value="7.0" min="0" max="30" step="0.1">
+                <span class="calc-input-suffix">%</span>
+              </div>
+            </div>
+
+            <div class="calc-field">
+              <label>Loan Term</label>
+              <div class="calc-term-toggle">
+                <button class="calc-term-btn" data-term="15" onclick="setTerm(15)">15 Years</button>
+                <button class="calc-term-btn active" data-term="30" onclick="setTerm(30)">30 Years</button>
+              </div>
+            </div>
+
+            <div class="calc-field">
+              <label>IL Property Tax Rate <span style="color:var(--text-dim);font-size:0.65rem;letter-spacing:0;">(Cook Co. avg ~2.2%)</span></label>
+              <div class="calc-input-wrap">
+                <input class="calc-input no-prefix has-suffix" id="calcTaxRate" type="number" value="2.2" min="0" max="10" step="0.1">
+                <span class="calc-input-suffix">%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Results -->
+          <div class="calc-results">
+            <div class="calc-section-label">Your Estimate</div>
+
+            <div class="calc-main-result">
+              <div class="calc-main-result-label">Est. Total Monthly Payment</div>
+              <div class="calc-main-result-value" id="resultTotal">$—</div>
+              <div class="calc-main-result-sub">Principal + Interest + Property Tax</div>
+            </div>
+
+            <div class="calc-breakdown">
+              <div class="calc-breakdown-row">
+                <span class="label">Loan Amount</span>
+                <span class="value" id="resultLoan">—</span>
+              </div>
+              <div class="calc-breakdown-row">
+                <span class="label">Principal &amp; Interest</span>
+                <span class="value" id="resultPI">—</span>
+              </div>
+              <div class="calc-breakdown-row">
+                <span class="label">Est. Monthly Property Tax</span>
+                <span class="value" id="resultTax">—</span>
+              </div>
+              <div class="calc-breakdown-row total-row">
+                <span class="label">Total Monthly Est.</span>
+                <span class="value" id="resultTotal2">—</span>
+              </div>
+              <div class="calc-breakdown-row" style="margin-top:8px;">
+                <span class="label">Total Interest Paid (life of loan)</span>
+                <span class="value" id="resultTotalInterest">—</span>
+              </div>
+            </div>
+
+            <div class="calc-disclaimer">
+              These figures are estimates for informational purposes only and do not constitute financial or legal advice. Actual payments will vary based on lender, credit profile, insurance, HOA fees, and assessed property value. Consult a licensed mortgage professional for accurate quotes.
+            </div>
+          </div>
+
+        </div>
+
+        <div class="calc-cta reveal">
+          <p>Ready to move forward? Let's talk through the numbers together.</p>
+          <a href="#" onclick="nav('contact')" class="btn-gold">Schedule a Consultation</a>
+        </div>
+
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="footer-main">
+          <div class="footer-brand"><h3>Kaplunov Law</h3><p>Chicago Real Estate Attorney · Licensed in Illinois</p></div>
+          <nav class="footer-nav">
+            <a href="#" onclick="nav('about')">About Me</a>
+            <a href="#" onclick="nav('services')">How I Can Help</a>
+            <a href="#" onclick="nav('faq')">FAQ</a>
+            <a href="#" onclick="nav('work')">The Work</a>
+            <a href="#" onclick="nav('reviews')">What They Say</a>
+            <a href="#" onclick="nav('contact')">Contact</a>
+          </nav>
+        </div>
+        <div class="footer-bottom">
+          <span class="footer-copy">&copy; 2026 Kaplunov Law LLC · All Rights Reserved</span>
+          <div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Attorney Advertising Disclaimer</a></div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<!-- ==========================================
      JAVASCRIPT
 ========================================== -->
 <script>
@@ -2618,11 +2969,68 @@ window.addEventListener('scroll', triggerReveals, { passive: true });
 // Handle hash routing
 window.addEventListener('load', function() {
   var hash = window.location.hash.replace('#', '');
-  var validPages = ['home','about','services','faq','work','reviews','contact'];
+  var validPages = ['home','about','services','faq','work','reviews','contact','calc'];
   if (hash && validPages.includes(hash)) {
     nav(hash);
   }
 });
+
+// ---- MORTGAGE CALCULATOR ----
+var calcTerm = 30;
+
+function setTerm(t) {
+  calcTerm = t;
+  document.querySelectorAll('.calc-term-btn').forEach(function(b) {
+    b.classList.toggle('active', parseInt(b.dataset.term) === t);
+  });
+  calcUpdate();
+}
+
+function fmtCurrency(n) {
+  return '$' + Math.round(n).toLocaleString('en-US');
+}
+
+function calcUpdate() {
+  var price    = parseFloat(document.getElementById('calcPrice').value)   || 0;
+  var down     = parseFloat(document.getElementById('calcDown').value)    || 0;
+  var rate     = parseFloat(document.getElementById('calcRate').value)    || 0;
+  var taxRate  = parseFloat(document.getElementById('calcTaxRate').value) || 0;
+
+  // Down payment %
+  var pctEl = document.getElementById('downPct');
+  if (price > 0) pctEl.textContent = Math.round((down / price) * 100) + '%';
+
+  var loan = Math.max(price - down, 0);
+  var r    = (rate / 100) / 12;
+  var n    = calcTerm * 12;
+
+  var pi = 0;
+  if (r > 0 && loan > 0) {
+    pi = loan * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+  } else if (loan > 0) {
+    pi = loan / n;
+  }
+
+  var monthlyTax   = (price * (taxRate / 100)) / 12;
+  var totalMonthly = pi + monthlyTax;
+  var totalInterest = (pi * n) - loan;
+
+  document.getElementById('resultLoan').textContent         = fmtCurrency(loan);
+  document.getElementById('resultPI').textContent           = fmtCurrency(pi) + '/mo';
+  document.getElementById('resultTax').textContent          = fmtCurrency(monthlyTax) + '/mo';
+  document.getElementById('resultTotal').textContent        = fmtCurrency(totalMonthly);
+  document.getElementById('resultTotal2').textContent       = fmtCurrency(totalMonthly) + '/mo';
+  document.getElementById('resultTotalInterest').textContent = fmtCurrency(Math.max(totalInterest, 0));
+}
+
+// Attach listeners
+['calcPrice','calcDown','calcRate','calcTaxRate'].forEach(function(id) {
+  var el = document.getElementById(id);
+  if (el) el.addEventListener('input', calcUpdate);
+});
+
+// Initial calculation on load
+calcUpdate();
 
 // ---- GOOGLE SHEETS LIVE DEALS ----
 var SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRHFaNDl2dlEnhUB72hdofUsZK65BS9iNLu5K7AkUsrWsb1lEpLGudTwi2EcAjTAA/pub?gid=832056066&single=true&output=csv';
