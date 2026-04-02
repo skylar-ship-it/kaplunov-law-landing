@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<script type="module" src="https://w.behold.so/widget.js"></script>
 <style>
 
 /* ===========================================
@@ -1124,10 +1125,13 @@ h1,h2,h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; 
 }
 .behold-feed-wrapper {
   width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 }
 .behold-feed-wrapper behold-widget {
   display: block;
   width: 100%;
+  max-width: 100%;
 }
 .ig-follow-cta {
   display: flex;
@@ -2281,14 +2285,6 @@ footer {
             Follow @kaplunovlaw
           </a>
         </div>
-        <script>
-          (() => {
-            const d = document, s = d.createElement('script');
-            s.type = 'module';
-            s.src = 'https://w.behold.so/widget.js';
-            d.head.append(s);
-          })();
-        </script>
       </div>
     </div>
 
