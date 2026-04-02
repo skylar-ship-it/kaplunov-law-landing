@@ -1036,6 +1036,17 @@ h1,h2,h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; 
   border-color: var(--gold);
 }
 
+/* Deals loading */
+.deals-loading {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 64px 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
 /* Deals grid */
 .work-grid {
   display: grid;
@@ -2145,16 +2156,16 @@ footer {
       <div class="container">
         <div class="work-stats-grid">
           <div class="work-stat reveal">
-            <span class="work-stat-num">100+</span>
-            <span class="work-stat-label">Closings Completed</span>
+            <span class="work-stat-num" id="statDealCount">—</span>
+            <span class="work-stat-label">Closings On Record</span>
           </div>
           <div class="work-stat reveal reveal-d1">
-            <span class="work-stat-num">$0</span>
-            <span class="work-stat-label">Surprise Fees, Ever</span>
+            <span class="work-stat-num" id="statTotalVolume">—</span>
+            <span class="work-stat-label">Total Volume Closed</span>
           </div>
           <div class="work-stat reveal reveal-d2">
-            <span class="work-stat-num">IL</span>
-            <span class="work-stat-label">Licensed Statewide</span>
+            <span class="work-stat-num">$0</span>
+            <span class="work-stat-label">Surprise Fees, Ever</span>
           </div>
         </div>
       </div>
@@ -2171,99 +2182,9 @@ footer {
           <button class="filter-btn" data-filter="commercial">Commercial</button>
         </div>
 
-        <!-- Deals grid -->
+        <!-- Deals grid — populated from Google Sheets -->
         <div class="work-grid" id="dealsGrid">
-
-          <div class="deal-card" data-category="residential">
-            <span class="deal-type">Residential Purchase</span>
-            <div class="deal-price">$485,000</div>
-            <div class="deal-location">Lincoln Park, Chicago, IL</div>
-            <div class="deal-meta">
-              <span>3 Bed · 2 Bath</span>
-              <span>First-Time Buyer</span>
-            </div>
-          </div>
-
-          <div class="deal-card" data-category="investment">
-            <span class="deal-type">Investment Acquisition</span>
-            <div class="deal-price">$1,200,000</div>
-            <div class="deal-location">Logan Square, Chicago, IL</div>
-            <div class="deal-meta">
-              <span>6-Unit Multi-Family</span>
-              <span>Portfolio Expansion</span>
-            </div>
-          </div>
-
-          <div class="deal-card" data-category="residential">
-            <span class="deal-type">Residential Sale</span>
-            <div class="deal-price">$720,000</div>
-            <div class="deal-location">Wicker Park, Chicago, IL</div>
-            <div class="deal-meta">
-              <span>4 Bed · 3 Bath</span>
-              <span>Seller Representation</span>
-            </div>
-          </div>
-
-          <div class="deal-card" data-category="commercial">
-            <span class="deal-type">Commercial Lease</span>
-            <div class="deal-price">$8,400/mo</div>
-            <div class="deal-location">River North, Chicago, IL</div>
-            <div class="deal-meta">
-              <span>Retail Storefront</span>
-              <span>5-Year Term</span>
-            </div>
-          </div>
-
-          <div class="deal-card" data-category="residential">
-            <span class="deal-type">Condo Purchase</span>
-            <div class="deal-price">$310,000</div>
-            <div class="deal-location">South Loop, Chicago, IL</div>
-            <div class="deal-meta">
-              <span>2 Bed · 2 Bath</span>
-              <span>New Construction</span>
-            </div>
-          </div>
-
-          <div class="deal-card" data-category="investment">
-            <span class="deal-type">Investment Portfolio</span>
-            <div class="deal-price">$2,100,000</div>
-            <div class="deal-location">Pilsen &amp; Bridgeport, IL</div>
-            <div class="deal-meta">
-              <span>3-Property Acquisition</span>
-              <span>Multi-Family</span>
-            </div>
-          </div>
-
-          <div class="deal-card" data-category="residential">
-            <span class="deal-type">Condo Sale</span>
-            <div class="deal-price">$395,000</div>
-            <div class="deal-location">Bucktown, Chicago, IL</div>
-            <div class="deal-meta">
-              <span>2 Bed · 2 Bath</span>
-              <span>Seller Representation</span>
-            </div>
-          </div>
-
-          <div class="deal-card" data-category="commercial">
-            <span class="deal-type">Commercial Purchase</span>
-            <div class="deal-price">$875,000</div>
-            <div class="deal-location">West Loop, Chicago, IL</div>
-            <div class="deal-meta">
-              <span>Mixed-Use Building</span>
-              <span>Owner-Occupied</span>
-            </div>
-          </div>
-
-          <div class="deal-card" data-category="investment">
-            <span class="deal-type">Investment Purchase</span>
-            <div class="deal-price">$540,000</div>
-            <div class="deal-location">Hyde Park, Chicago, IL</div>
-            <div class="deal-meta">
-              <span>3-Unit Multi-Family</span>
-              <span>First Investment</span>
-            </div>
-          </div>
-
+          <div class="deals-loading" id="dealsLoading">Loading deals…</div>
         </div>
       </div>
     </section>
@@ -2701,6 +2622,128 @@ window.addEventListener('load', function() {
   if (hash && validPages.includes(hash)) {
     nav(hash);
   }
+});
+
+// ---- GOOGLE SHEETS LIVE DEALS ----
+var SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRHFaNDl2dlEnhUB72hdofUsZK65BS9iNLu5K7AkUsrWsb1lEpLGudTwi2EcAjTAA/pub?gid=832056066&single=true&output=csv';
+
+function parseCSVLine(line) {
+  var result = [], cur = '', inQuotes = false;
+  for (var i = 0; i < line.length; i++) {
+    var c = line[i];
+    if (c === '"') { inQuotes = !inQuotes; }
+    else if (c === ',' && !inQuotes) { result.push(cur.trim()); cur = ''; }
+    else { cur += c; }
+  }
+  result.push(cur.trim());
+  return result;
+}
+
+function formatPrice(val) {
+  var n = parseFloat(String(val).replace(/[^0-9.]/g, ''));
+  if (isNaN(n) || n === 0) return val;
+  if (n >= 1000000) return '$' + (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+  return '$' + n.toLocaleString('en-US');
+}
+
+function formatVolume(n) {
+  if (n >= 1000000) return '$' + (n / 1000000).toFixed(1) + 'M';
+  return '$' + n.toLocaleString('en-US');
+}
+
+function renderDeals(deals) {
+  var grid = document.getElementById('dealsGrid');
+  if (!grid) return;
+  var activeFilter = 'all';
+  var btn = document.querySelector('.filter-btn.active');
+  if (btn) activeFilter = btn.dataset.filter;
+
+  var html = '';
+  deals.forEach(function(d) {
+    var type     = (d['Type'] || '').trim();
+    var price    = formatPrice(d['Sale Price ($)'] || d['Sale Price'] || '');
+    var address  = (d['Address'] || '').trim();
+    var hood     = (d['Neighborhood'] || '').trim();
+    var date     = (d['Close Date'] || '').trim();
+    var notes    = (d['Notes'] || '').trim();
+    var cat      = type.toLowerCase();
+    var display  = (activeFilter === 'all' || activeFilter === cat) ? '' : 'display:none;';
+
+    html += '<div class="deal-card" data-category="' + cat + '" style="' + display + '">';
+    html += '<span class="deal-type">' + type + '</span>';
+    html += '<div class="deal-price">' + price + '</div>';
+    html += '<div class="deal-location">' + (hood || address) + '</div>';
+    html += '<div class="deal-meta">';
+    if (date) html += '<span>' + date + '</span>';
+    if (notes) html += '<span>' + notes + '</span>';
+    html += '</div>';
+    html += '</div>';
+  });
+
+  grid.innerHTML = html || '<div class="deals-loading">No deals found.</div>';
+}
+
+function loadSheetDeals() {
+  fetch(SHEET_URL)
+    .then(function(r) { return r.text(); })
+    .then(function(text) {
+      var lines = text.trim().split('\n');
+      var headers = parseCSVLine(lines[0]).map(function(h) { return h.replace(/"/g,'').trim(); });
+      var deals = [];
+      var totalVol = 0;
+
+      for (var i = 1; i < lines.length; i++) {
+        var vals = parseCSVLine(lines[i]);
+        var row = {};
+        headers.forEach(function(h, idx) {
+          row[h] = (vals[idx] || '').replace(/^"|"$/g, '').trim();
+        });
+        // Skip blank rows and the TOTAL row
+        var addr = row['Address'] || '';
+        if (!addr || addr.toLowerCase().includes('closed deal') || addr.toLowerCase().includes('total')) continue;
+
+        var priceRaw = parseFloat(String(row['Sale Price ($)'] || row['Sale Price'] || '0').replace(/[^0-9.]/g, ''));
+        if (!isNaN(priceRaw)) totalVol += priceRaw;
+        deals.push(row);
+      }
+
+      renderDeals(deals);
+
+      // Update stats
+      var countEl = document.getElementById('statDealCount');
+      var volEl   = document.getElementById('statTotalVolume');
+      if (countEl) countEl.textContent = deals.length;
+      if (volEl)   volEl.textContent   = formatVolume(totalVol);
+
+      // Re-attach filter logic with live data
+      document.querySelectorAll('.filter-btn').forEach(function(btn) {
+        btn.onclick = function() {
+          document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+          this.classList.add('active');
+          var filter = this.dataset.filter;
+          document.querySelectorAll('#dealsGrid .deal-card').forEach(function(card) {
+            card.style.display = (filter === 'all' || card.dataset.category === filter) ? '' : 'none';
+          });
+        };
+      });
+    })
+    .catch(function() {
+      var grid = document.getElementById('dealsGrid');
+      if (grid) grid.innerHTML = '<div class="deals-loading">Unable to load deals right now.</div>';
+    });
+}
+
+// Load deals when Work page becomes active
+var _origNav = nav;
+nav = function(pageId, e) {
+  var result = _origNav(pageId, e);
+  if (pageId === 'work') loadSheetDeals();
+  return result;
+};
+
+// Also load if Work page is the initial page
+window.addEventListener('load', function() {
+  if (window.location.hash === '#work') loadSheetDeals();
 });
 </script>
 
