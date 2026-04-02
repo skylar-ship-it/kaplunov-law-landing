@@ -9,88 +9,141 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <style>
 
-/* =============================================
-   RESET & BASE
-============================================= */
+/* ===========================================
+   VARIABLES & RESET
+=========================================== */
+:root {
+  --black:      #0B0B0B;
+  --surface:    #0F0F0D;
+  --surface-2:  #141412;
+  --surface-3:  #1A1A17;
+  --charcoal:   #2A2A26;
+  --gold:       #BA9C61;
+  --soft-gold:  #D6B77A;
+  --muted-gold: #8A7045;
+  --cream:      #F5F0E8;
+  --text:       #F0EBE1;
+  --text-muted: rgba(240,235,225,0.52);
+  --text-dim:   rgba(240,235,225,0.28);
+  --border:     rgba(186,156,97,0.13);
+  --border-h:   rgba(186,156,97,0.35);
+  --nav-h:      88px;
+  --max-w:      1100px;
+  --page-pad:   64px;
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  background-color: #F5F0E8;
-  color: #1C1C1A;
+  background: var(--black);
+  color: var(--text);
   font-family: 'DM Sans', Arial, sans-serif;
   font-weight: 300;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  min-height: 100vh;
 }
+img, video { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+ul { list-style: none; }
 
-/* =============================================
-   VARIABLES
-============================================= */
-:root {
-  --deep-black:  #0B0B0B;
-  --charcoal:    #3A3D3D;
-  --gold:        #BA9C61;
-  --soft-gold:   #D6B77A;
-  --muted-gold:  #D0B888;
-  --cream:       #F5F0E8;
-  --parchment:   #EDE6D6;
-  --sand:        #D9CDB8;
-  --champagne:   #EAD9BC;
-  --ink:         #1C1C1A;
-  --muted:       #7A7268;
-  --nav-h:       104px;
-  --max-w:       1120px;
-}
-
-/* =============================================
-   TYPOGRAPHY HELPERS
-============================================= */
+/* ===========================================
+   TYPOGRAPHY
+=========================================== */
 .serif { font-family: 'Cormorant Garamond', Georgia, serif; }
+h1,h2,h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; line-height: 1.08; }
 
-/* =============================================
-   LAYOUT
-============================================= */
+.page-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+.page-eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px; height: 1px;
+  background: var(--gold);
+}
+
+.gold-rule {
+  display: block;
+  width: 40px; height: 1px;
+  background: var(--gold);
+  margin-bottom: 24px;
+}
+
+/* ===========================================
+   LAYOUT HELPERS
+=========================================== */
 .container {
   max-width: var(--max-w);
   margin: 0 auto;
   padding: 0 48px;
 }
-@media (max-width: 768px) { .container { padding: 0 24px; } }
-
-/* =============================================
-   DECORATIVE
-============================================= */
-.gold-line { display: block; width: 44px; height: 1px; background: var(--gold); }
-.section-tag {
+.page-wrap {
+  padding: 100px 0 80px;
+  min-height: calc(100vh - var(--nav-h) - 80px);
+}
+.btn-gold {
   display: inline-block;
-  font-size: 0.65rem;
+  background: var(--gold);
+  color: var(--black);
+  font-size: 0.66rem;
   font-weight: 500;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 14px 34px;
+  transition: background 0.25s;
+}
+.btn-gold:hover { background: var(--soft-gold); }
+.btn-outline {
+  display: inline-block;
+  background: transparent;
+  color: var(--text);
+  font-size: 0.66rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 13px 33px;
+  border: 1px solid rgba(240,235,225,0.22);
+  transition: all 0.25s;
+}
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+.btn-ghost-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--gold);
-  margin-bottom: 20px;
+  transition: gap 0.25s;
 }
-.section-tag.light { color: var(--soft-gold); }
+.btn-ghost-gold:hover { gap: 16px; }
+.btn-ghost-gold::after { content: '→'; }
 
-/* =============================================
+/* ===========================================
    NAVIGATION
-============================================= */
+=========================================== */
 #nav {
   position: fixed;
   top: 0; left: 0; right: 0;
-  z-index: 200;
+  z-index: 300;
   height: var(--nav-h);
-  transition: background 0.4s, box-shadow 0.4s;
-}
-#nav.scrolled {
-  background: rgba(245, 240, 232, 0.96);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 1px 0 var(--sand);
-}
-#nav.dark-nav {
-  background: transparent;
+  background: rgba(11,11,11,0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: border-color 0.4s;
 }
 .nav-inner {
   max-width: var(--max-w);
@@ -102,7 +155,28 @@ body {
   justify-content: space-between;
   position: relative;
 }
-/* Centered logo mark */
+/* Left links */
+.nav-left, .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.nav-left a, .nav-right a {
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+.nav-left a:hover,
+.nav-right a:hover,
+.nav-left a.active,
+.nav-right a.active { color: var(--gold); }
+
+/* Center logo */
 .nav-logo {
   position: absolute;
   left: 50%;
@@ -110,958 +184,1119 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  text-decoration: none;
   height: 100%;
-  padding: 8px 0;
+  padding: 6px 0;
+  cursor: pointer;
   z-index: 2;
 }
-.nav-logo-img {
-  height: 86px;
+.nav-logo img {
+  height: 70px;
   width: auto;
-  display: block;
-  transition: opacity 0.3s;
+  transition: opacity 0.25s;
 }
-.nav-logo:hover .nav-logo-img { opacity: 0.85; }
+.nav-logo:hover img { opacity: 0.8; }
 
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 36px;
-  list-style: none;
-}
-.nav-links a {
-  font-size: 0.7rem;
-  font-weight: 400;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(248,248,248,0.75);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--soft-gold); }
-#nav.scrolled .nav-links a { color: var(--muted); }
-#nav.scrolled .nav-links a:hover { color: var(--gold); }
-
+/* CTA button in nav */
 .nav-cta {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.66rem;
+  font-size: 0.62rem;
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--deep-black);
+  color: var(--black) !important;
   background: var(--gold);
-  padding: 11px 24px;
-  text-decoration: none;
+  padding: 9px 20px;
   transition: background 0.25s;
   white-space: nowrap;
 }
-.nav-cta:hover { background: var(--soft-gold); }
+.nav-cta:hover { background: var(--soft-gold) !important; color: var(--black) !important; }
 
-/* Hamburger */
+/* Mobile toggle */
 .nav-toggle {
   display: none;
   flex-direction: column;
   gap: 5px;
-  cursor: pointer;
   padding: 4px;
+  cursor: pointer;
 }
 .nav-toggle span {
   display: block;
   width: 22px; height: 1.5px;
-  background: #F8F8F8;
-  transition: background 0.3s;
+  background: var(--text-muted);
+  transition: all 0.3s;
 }
-#nav.scrolled .nav-toggle span { background: var(--ink); }
+.nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
 /* Mobile menu */
 .mobile-menu {
   display: none;
   position: fixed;
   top: var(--nav-h); left: 0; right: 0;
-  background: var(--cream);
-  border-bottom: 1px solid var(--sand);
-  z-index: 199;
-  padding: 32px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  z-index: 299;
+  padding: 24px 32px 32px;
   flex-direction: column;
   gap: 0;
 }
 .mobile-menu.open { display: flex; }
 .mobile-menu a {
-  font-size: 0.8rem;
-  font-weight: 400;
-  letter-spacing: 0.16em;
+  font-size: 0.82rem;
+  font-weight: 300;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--muted);
-  text-decoration: none;
-  padding: 16px 0;
-  border-bottom: 1px solid var(--sand);
-  display: block;
+  color: var(--text-muted);
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(186,156,97,0.08);
+  transition: color 0.2s;
 }
+.mobile-menu a:hover, .mobile-menu a.active { color: var(--gold); }
 .mobile-menu a:last-child { border-bottom: none; }
-.mobile-menu .mobile-cta {
+.mobile-cta-link {
   margin-top: 20px;
   background: var(--gold);
-  color: var(--deep-black);
-  padding: 14px 24px;
+  color: var(--black) !important;
   text-align: center;
-  font-weight: 500;
-  border-bottom: none;
+  padding: 16px !important;
+  border: none !important;
+  font-weight: 500 !important;
 }
 
-/* =============================================
-   HERO
-============================================= */
-#hero {
-  min-height: 100vh;
-  background-color: var(--deep-black);
+/* ===========================================
+   SPA PAGE SYSTEM
+=========================================== */
+.page { display: none; animation: fadeIn 0.45s ease; }
+.page.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===========================================
+   HOME PAGE
+=========================================== */
+#page-home { }
+
+/* Hero */
+.home-hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: calc(var(--nav-h) + 40px) 0 0;
-  position: relative;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   overflow: hidden;
+  padding: var(--nav-h) 40px 0;
 }
-
-/* Video background */
-.hero-video {
+.home-hero-video {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   object-fit: cover;
   object-position: center;
   z-index: 0;
 }
-
-/* Dark overlay so text stays readable over the video */
-#hero::before {
-  content: '';
+.home-hero-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    160deg,
-    rgba(11,11,11,0.78) 0%,
-    rgba(11,11,11,0.60) 50%,
-    rgba(20,18,14,0.75) 100%
+    180deg,
+    rgba(11,11,11,0.55) 0%,
+    rgba(11,11,11,0.50) 50%,
+    rgba(11,11,11,0.82) 100%
   );
   z-index: 1;
-  pointer-events: none;
 }
-/* Gold gradient glow at bottom */
-#hero::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(to right, transparent 0%, var(--gold) 30%, var(--soft-gold) 50%, var(--gold) 70%, transparent 100%);
-  z-index: 2;
-}
-
-.hero-inner {
+.home-hero-content {
   position: relative;
   z-index: 2;
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 48px;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: flex-end;
-  padding-bottom: 80px;
+  max-width: 780px;
 }
-
-.hero-left {}
-
-.hero-eyebrow {
-  font-size: 0.65rem;
+.home-hero-eyebrow {
+  font-size: 0.62rem;
   font-weight: 500;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--gold);
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 32px;
-}
-.hero-eyebrow::before {
-  content: '';
-  display: block;
-  width: 32px; height: 1px;
-  background: var(--gold);
-}
-
-.hero-title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(3rem, 6vw, 5.8rem);
-  font-weight: 300;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  color: #F8F8F8;
-  margin-bottom: 32px;
-}
-.hero-title em {
-  font-style: italic;
-  color: var(--soft-gold);
-}
-
-.hero-body {
-  font-size: 1.05rem;
-  font-weight: 300;
-  color: rgba(248,248,248,0.6);
-  line-height: 1.8;
-  max-width: 420px;
-  margin-bottom: 44px;
-}
-
-.hero-actions {
-  display: flex;
+  justify-content: center;
   gap: 16px;
-  flex-wrap: wrap;
-  align-items: center;
+  margin-bottom: 36px;
 }
-.btn-gold {
-  display: inline-block;
-  background: var(--gold);
-  color: var(--deep-black);
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  padding: 15px 36px;
-  text-decoration: none;
-  transition: background 0.25s;
-  white-space: nowrap;
-}
-.btn-gold:hover { background: var(--soft-gold); }
-.btn-outline-light {
-  display: inline-block;
-  background: transparent;
-  color: rgba(248,248,248,0.7);
-  font-size: 0.68rem;
-  font-weight: 400;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  padding: 14px 35px;
-  text-decoration: none;
-  border: 1px solid rgba(248,248,248,0.22);
-  transition: all 0.25s;
-  white-space: nowrap;
-}
-.btn-outline-light:hover {
-  color: #F8F8F8;
-  border-color: rgba(248,248,248,0.5);
-}
-.btn-outline-dark {
-  display: inline-block;
-  background: transparent;
-  color: var(--charcoal);
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  padding: 14px 35px;
-  text-decoration: none;
-  border: 1px solid var(--charcoal);
-  transition: all 0.25s;
-  white-space: nowrap;
-}
-.btn-outline-dark:hover { background: var(--charcoal); color: #F8F8F8; }
-
-.hero-right {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-end;
-  padding-bottom: 0;
-}
-
-.hero-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  width: 100%;
-}
-.stat-row {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.07);
-  padding: 28px 36px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  backdrop-filter: blur(8px);
-}
-.stat-number {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 3rem;
-  font-weight: 300;
-  color: var(--soft-gold);
-  line-height: 1;
-  flex-shrink: 0;
-}
-.stat-label {
-  font-size: 0.78rem;
-  font-weight: 300;
-  color: rgba(248,248,248,0.55);
-  line-height: 1.55;
-  text-align: right;
-}
-
-/* =============================================
-   TICKER
-============================================= */
-#ticker {
-  background: var(--gold);
-  padding: 14px 0;
-  overflow: hidden;
-  white-space: nowrap;
-}
-.ticker-track {
-  display: inline-flex;
-  animation: ticker-scroll 28s linear infinite;
-}
-.ticker-track:hover { animation-play-state: paused; }
-.ticker-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 20px;
-  padding: 0 20px;
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--deep-black);
-}
-.ticker-dot {
-  display: block;
-  width: 4px; height: 4px;
-  border-radius: 50%;
-  background: rgba(11,11,11,0.35);
-  flex-shrink: 0;
-}
-@keyframes ticker-scroll {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-/* =============================================
-   ABOUT
-============================================= */
-#about {
-  padding: 140px 0;
-  background: var(--cream);
-}
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 100px;
-  align-items: center;
-}
-.about-image-col {
-  position: relative;
-}
-.about-photo {
-  width: 100%;
-  aspect-ratio: 3/4;
-  background: var(--charcoal);
-  position: relative;
-  overflow: hidden;
-}
-/* Gold accent corner */
-.about-photo::before {
+.home-hero-eyebrow::before,
+.home-hero-eyebrow::after {
   content: '';
-  position: absolute;
-  top: -1px; right: -1px;
-  width: 60px; height: 60px;
-  border-top: 2px solid var(--gold);
-  border-right: 2px solid var(--gold);
-  z-index: 1;
+  display: block;
+  width: 28px; height: 1px;
+  background: var(--gold);
+  opacity: 0.6;
 }
-.about-photo::after {
-  content: '';
-  position: absolute;
-  bottom: -1px; left: -1px;
-  width: 60px; height: 60px;
-  border-bottom: 2px solid var(--gold);
-  border-left: 2px solid var(--gold);
-  z-index: 1;
-}
-/* Floating badge */
-.about-badge {
-  position: absolute;
-  bottom: -24px; right: -24px;
-  background: var(--deep-black);
-  padding: 28px 32px;
-  border: 1px solid rgba(186,156,97,0.2);
-  text-align: center;
-  z-index: 2;
-}
-.about-badge-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.8rem;
+.home-hero-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(3.2rem, 8vw, 7.5rem);
   font-weight: 300;
-  color: var(--soft-gold);
-  line-height: 1;
-  display: block;
-}
-.about-badge-label {
-  font-size: 0.6rem;
-  font-weight: 400;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.4);
-  display: block;
-  margin-top: 6px;
-}
-
-.about-content {}
-.about-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2.2rem, 4vw, 3.4rem);
-  font-weight: 400;
-  line-height: 1.1;
-  color: var(--ink);
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--cream);
   margin-bottom: 28px;
 }
-.about-title em { font-style: italic; color: var(--gold); }
-.about-body {
-  font-size: 1.0rem;
-  font-weight: 300;
-  line-height: 1.85;
-  color: var(--muted);
-  margin-bottom: 20px;
-}
-.about-pillars {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px;
-  background: var(--sand);
-  margin: 44px 0;
-}
-.pillar {
-  background: var(--parchment);
-  padding: 28px 24px;
-}
-.pillar-icon {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.6rem;
+.home-hero-title em {
   font-style: italic;
-  color: var(--gold);
-  opacity: 0.6;
-  line-height: 1;
-  margin-bottom: 10px;
-  display: block;
+  color: var(--soft-gold);
 }
-.pillar h4 {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink);
-  margin-bottom: 6px;
-}
-.pillar p {
-  font-size: 0.83rem;
+.home-hero-sub {
+  font-size: 1.05rem;
   font-weight: 300;
-  color: var(--muted);
-  line-height: 1.65;
-}
-
-/* =============================================
-   SERVICES / PRACTICE AREAS
-============================================= */
-#services {
-  padding: 140px 0;
-  background: var(--parchment);
-}
-.section-header-centered {
-  text-align: center;
-  margin-bottom: 72px;
-}
-.section-header-centered h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
-  font-weight: 400;
-  color: var(--ink);
-  line-height: 1.1;
-  margin-bottom: 16px;
-}
-.section-header-centered p {
-  font-size: 1.0rem;
-  font-weight: 300;
-  color: var(--muted);
-  max-width: 520px;
-  margin: 0 auto;
-  line-height: 1.8;
-}
-
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  background: var(--sand);
+  color: rgba(240,235,225,0.62);
   margin-bottom: 48px;
+  line-height: 1.75;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
 }
-.service-card {
-  background: var(--cream);
-  padding: 52px 44px;
-  transition: background 0.3s;
-  cursor: default;
-  position: relative;
-  overflow: hidden;
+.home-hero-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
-.service-card::before {
+/* Scroll indicator */
+.home-hero-scroll {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.home-hero-scroll span {
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(240,235,225,0.3);
+}
+.scroll-line {
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, rgba(186,156,97,0.5), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%,100% { opacity: 0.4; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.1); }
+}
+/* Gold bottom edge */
+.home-hero::after {
   content: '';
   position: absolute;
   bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  z-index: 3;
+  opacity: 0.5;
+}
+
+/* Portal cards */
+.home-portals {
+  padding: 96px 0;
+  background: var(--black);
+}
+.portals-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+.portals-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+  font-weight: 300;
+  color: var(--text);
+  margin-top: 8px;
+}
+.portals-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+}
+.portal-card {
+  background: var(--surface);
+  padding: 52px 40px 44px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: background 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.portal-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
   height: 2px;
   background: var(--gold);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.35s ease;
+  transition: transform 0.4s ease;
 }
-.service-card:hover::before { transform: scaleX(1); }
-.service-card:hover { background: var(--parchment); }
-.service-num {
+.portal-card:hover { background: var(--surface-2); }
+.portal-card:hover::before { transform: scaleX(1); }
+.portal-num {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 3.5rem;
+  font-size: 3rem;
   font-weight: 300;
   color: var(--gold);
-  opacity: 0.2;
+  opacity: 0.18;
   line-height: 1;
-  margin-bottom: 20px;
-  display: block;
+  margin-bottom: 32px;
 }
-.service-card h3 {
+.portal-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.55rem;
-  font-weight: 500;
-  color: var(--ink);
-  margin-bottom: 16px;
+  font-size: 1.45rem;
+  font-weight: 400;
+  color: var(--text);
   line-height: 1.2;
+  margin-bottom: 14px;
 }
-.service-card p {
-  font-size: 0.88rem;
+.portal-desc {
+  font-size: 0.84rem;
   font-weight: 300;
-  color: var(--muted);
-  line-height: 1.8;
-  margin-bottom: 28px;
-}
-.service-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.service-tag {
-  font-size: 0.62rem;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--gold);
-  background: rgba(186,156,97,0.1);
-  padding: 5px 12px;
-}
-
-/* =============================================
-   RECENT CLOSINGS
-============================================= */
-#closings {
-  padding: 140px 0;
-  background: var(--deep-black);
-  position: relative;
-}
-#closings::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--gold), transparent);
-  opacity: 0.3;
-}
-#closings::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--gold), transparent);
-  opacity: 0.3;
-}
-.closings-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 64px;
-}
-.closings-header h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
-  font-weight: 400;
-  color: #F8F8F8;
-  line-height: 1.05;
-}
-.closings-header h2 em { font-style: italic; color: var(--soft-gold); }
-.closings-header p {
-  font-size: 0.88rem;
-  font-weight: 300;
-  color: rgba(255,255,255,0.4);
-  max-width: 260px;
-  text-align: right;
+  color: var(--text-muted);
   line-height: 1.7;
+  flex: 1;
+  margin-bottom: 32px;
 }
-
-.closings-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  background: rgba(255,255,255,0.04);
-}
-.closing-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
-  padding: 44px 40px;
-  transition: background 0.3s, border-color 0.3s;
-}
-.closing-card:hover {
-  background: rgba(186,156,97,0.05);
-  border-color: rgba(186,156,97,0.2);
-}
-.closing-type {
-  display: inline-block;
-  font-size: 0.6rem;
+.portal-arrow {
+  font-size: 0.62rem;
   font-weight: 500;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--gold);
-  background: rgba(186,156,97,0.1);
-  padding: 5px 12px;
-  margin-bottom: 24px;
-}
-.closing-price {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2rem, 4vw, 3.2rem);
-  font-weight: 300;
-  color: #F8F8F8;
-  line-height: 1;
-  margin-bottom: 12px;
-}
-.closing-address {
-  font-size: 0.85rem;
-  font-weight: 300;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 20px;
-  line-height: 1.5;
-}
-.closing-details {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-.closing-detail {
-  font-size: 0.68rem;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.3);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
+  transition: gap 0.25s;
 }
-.closing-detail::before {
-  content: '';
-  display: block;
-  width: 4px; height: 4px;
-  border-radius: 50%;
-  background: var(--gold);
-  opacity: 0.5;
-  flex-shrink: 0;
-}
+.portal-card:hover .portal-arrow { gap: 16px; }
+.portal-arrow::after { content: '→'; }
 
-/* =============================================
-   TESTIMONIALS
-============================================= */
-#testimonials {
-  padding: 140px 0;
-  background: var(--cream);
+/* Home about strip */
+.home-about-strip {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
 }
-.testimonials-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  background: var(--sand);
-}
-.testimonial-card {
-  background: var(--parchment);
-  padding: 52px 44px;
-  transition: background 0.3s;
-  position: relative;
-}
-.testimonial-card:hover { background: var(--champagne); }
-.testimonial-stars {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 28px;
-}
-.star {
-  width: 12px; height: 12px;
-  background: var(--gold);
-  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-}
-.testimonial-quote {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.2rem;
-  font-weight: 400;
-  font-style: italic;
-  line-height: 1.65;
-  color: var(--charcoal);
-  margin-bottom: 32px;
-  position: relative;
-}
-.testimonial-quote::before {
-  content: '\201C';
-  position: absolute;
-  top: -20px; left: -6px;
-  font-size: 5rem;
-  color: var(--gold);
-  opacity: 0.12;
-  line-height: 1;
-  font-style: normal;
-}
-.testimonial-author {
-  border-top: 1px solid var(--sand);
-  padding-top: 20px;
-}
-.testimonial-name {
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: var(--ink);
-  letter-spacing: 0.04em;
-}
-.testimonial-context {
-  font-size: 0.7rem;
-  font-weight: 300;
-  color: var(--gold);
-  letter-spacing: 0.1em;
-  margin-top: 3px;
-  text-transform: uppercase;
-  font-size: 0.62rem;
-  letter-spacing: 0.14em;
-}
-
-/* =============================================
-   WHY SECTION
-============================================= */
-#why {
-  padding: 140px 0;
-  background: var(--parchment);
-}
-.why-grid {
+.home-about-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 48px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2px;
-  background: var(--sand);
-}
-.why-left {
-  background: var(--cream);
-  padding: 72px 64px;
-}
-.why-left h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2rem, 4vw, 3.2rem);
-  font-weight: 400;
-  color: var(--ink);
-  line-height: 1.1;
-  margin-bottom: 52px;
-}
-.why-left h2 em { font-style: italic; color: var(--gold); }
-.why-list {
-  display: flex;
-  flex-direction: column;
   gap: 0;
 }
-.why-item {
-  display: flex;
-  gap: 24px;
-  align-items: start;
-  padding: 28px 0;
-  border-bottom: 1px solid var(--sand);
+.home-about-photo {
+  position: relative;
+  overflow: hidden;
+  height: 420px;
+  background: var(--surface-2);
 }
-.why-item:last-child { border-bottom: none; }
-.why-item-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.8rem;
-  font-weight: 300;
-  color: var(--gold);
-  opacity: 0.5;
-  line-height: 1.1;
-  flex-shrink: 0;
-  width: 32px;
+.home-about-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: brightness(0.9) contrast(1.05);
+  transition: transform 0.6s ease;
 }
-.why-item h4 {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.82rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink);
-  margin-bottom: 6px;
-}
-.why-item p {
-  font-size: 0.88rem;
-  font-weight: 300;
-  color: var(--muted);
-  line-height: 1.7;
-}
-.why-right {
-  background: var(--charcoal);
-  padding: 72px 64px;
+.home-about-strip:hover .home-about-photo img { transform: scale(1.02); }
+.home-about-text {
+  padding: 64px 56px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  border-left: 1px solid var(--border);
 }
-.why-quote {
+.home-about-text h3 {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
   font-weight: 300;
-  font-style: italic;
-  color: rgba(248,248,248,0.88);
-  line-height: 1.45;
+  color: var(--text);
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+.home-about-text h3 em { font-style: italic; color: var(--soft-gold); }
+.home-about-text p {
+  font-size: 1.0rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.85;
+  margin-bottom: 36px;
+}
+
+/* Home contact CTA */
+.home-cta-strip {
+  padding: 96px 0;
+  text-align: center;
   position: relative;
-  flex: 1;
-  display: flex;
-  align-items: center;
+  overflow: hidden;
 }
-.why-quote::before {
-  content: '\201C';
+.home-cta-strip::before {
+  content: 'K';
   position: absolute;
-  top: -32px; left: -12px;
-  font-size: 7rem;
-  color: var(--gold);
-  opacity: 0.12;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 50vw;
+  font-weight: 300;
+  color: rgba(186,156,97,0.025);
   line-height: 1;
-  font-style: normal;
+  pointer-events: none;
+  user-select: none;
 }
-.why-areas {
-  margin-top: 48px;
-  padding-top: 36px;
-  border-top: 1px solid rgba(255,255,255,0.08);
+.home-cta-strip h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 4.5vw, 3.8rem);
+  font-weight: 300;
+  color: var(--text);
+  margin-bottom: 20px;
+  position: relative;
 }
-.why-areas-label {
+.home-cta-strip h2 em { font-style: italic; color: var(--soft-gold); }
+.home-cta-strip p {
+  font-size: 1.0rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  max-width: 440px;
+  margin: 0 auto 44px;
+  line-height: 1.8;
+  position: relative;
+}
+.home-cta-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  position: relative;
+}
+
+/* ===========================================
+   ABOUT PAGE
+=========================================== */
+.about-hero {
+  padding: 80px 0 64px;
+  border-bottom: 1px solid var(--border);
+}
+.about-hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  align-items: stretch;
+}
+.about-photo-col {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-2);
+  min-height: 560px;
+}
+.about-photo-col img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+.about-photo-col::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, transparent 60%, var(--black) 100%);
+  pointer-events: none;
+}
+.about-text-col {
+  padding: 72px 64px 72px 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.about-text-col h1 {
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  font-weight: 300;
+  color: var(--text);
+  margin-bottom: 8px;
+  line-height: 1.05;
+}
+.about-text-col h1 em { font-style: italic; color: var(--soft-gold); }
+.about-role {
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 36px;
+  display: block;
+}
+.about-bio p {
+  font-size: 1.0rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.9;
+  margin-bottom: 20px;
+}
+.about-bio p:last-child { margin-bottom: 0; }
+.about-pillars {
+  padding: 72px 0;
+  border-bottom: 1px solid var(--border);
+}
+.about-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  margin-top: 56px;
+}
+.about-pillar {
+  background: var(--surface);
+  padding: 44px 36px;
+}
+.pillar-label {
   font-size: 0.6rem;
   font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--gold);
   display: block;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
-.why-areas-list {
+.about-pillar h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.about-pillar p {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.75;
+}
+.about-philosophy {
+  padding: 88px 0;
+  text-align: center;
+}
+.about-philosophy blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.55;
+  max-width: 760px;
+  margin: 0 auto 32px;
+  position: relative;
+}
+.about-philosophy blockquote::before {
+  content: '\201C';
+  position: absolute;
+  top: -40px; left: -16px;
+  font-size: 7rem;
+  color: var(--gold);
+  opacity: 0.1;
+  font-style: normal;
+  line-height: 1;
+}
+.about-philosophy cite {
+  font-size: 0.68rem;
+  font-style: normal;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.about-cta-bar {
+  padding: 64px 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.about-cta-bar p {
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+}
+
+/* ===========================================
+   SERVICES / HOW I CAN HELP
+=========================================== */
+.services-header {
+  padding: 88px 0 72px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.services-header h1 {
+  font-size: clamp(2.4rem, 5.5vw, 4.8rem);
+  font-weight: 300;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+.services-header h1 em { font-style: italic; color: var(--soft-gold); }
+.services-header p {
+  font-size: 1.0rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+.services-list {
+  padding: 80px 0;
+}
+.service-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1px;
+  background: var(--border);
+  margin-bottom: 1px;
+}
+.service-row:last-child { margin-bottom: 0; }
+.service-label-col {
+  background: var(--surface);
+  padding: 56px 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.service-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem;
+  font-weight: 300;
+  color: var(--gold);
+  opacity: 0.18;
+  line-height: 1;
+  margin-bottom: 20px;
+}
+.service-label-col h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.15;
+}
+.service-content-col {
+  background: var(--surface-2);
+  padding: 56px 56px;
+}
+.service-content-col p {
+  font-size: 0.96rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.85;
+  margin-bottom: 28px;
+  max-width: 540px;
+}
+.service-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
-.why-area-tag {
-  font-size: 0.62rem;
+.stag {
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(186,156,97,0.08);
+  border: 1px solid rgba(186,156,97,0.18);
+  padding: 5px 14px;
+}
+.services-cta {
+  padding: 80px 0;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+.services-cta h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
   font-weight: 300;
-  letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.4);
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  padding: 5px 12px;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.services-cta p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  font-weight: 300;
 }
 
-/* =============================================
-   CTA BAND
-============================================= */
-#cta {
-  padding: 140px 0;
-  background: var(--champagne);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+/* ===========================================
+   FAQ PAGE
+=========================================== */
+.faq-header {
+  padding: 88px 0 72px;
+  border-bottom: 1px solid var(--border);
 }
-#cta::before {
-  content: 'K';
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 40vw;
+.faq-header h1 {
+  font-size: clamp(2.4rem, 5.5vw, 4.8rem);
   font-weight: 300;
-  color: rgba(186,156,97,0.06);
-  line-height: 1;
-  pointer-events: none;
-  user-select: none;
+  color: var(--text);
+  margin-bottom: 20px;
+  max-width: 640px;
 }
-.cta-inner {
-  position: relative;
-  z-index: 1;
-  max-width: 680px;
-  margin: 0 auto;
-}
-.cta-inner h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2.4rem, 5vw, 4rem);
-  font-weight: 400;
-  color: var(--ink);
-  line-height: 1.1;
-  margin-bottom: 24px;
-}
-.cta-inner h2 em { font-style: italic; color: var(--gold); }
-.cta-inner p {
-  font-size: 1.05rem;
+.faq-header h1 em { font-style: italic; color: var(--soft-gold); }
+.faq-header p {
+  font-size: 1.0rem;
   font-weight: 300;
-  color: var(--muted);
-  margin-bottom: 48px;
+  color: var(--text-muted);
+  max-width: 480px;
   line-height: 1.8;
 }
-.cta-actions {
+.faq-list {
+  padding: 72px 0 80px;
+  max-width: 800px;
+}
+.faq-item {
+  border-bottom: 1px solid var(--border);
+}
+.faq-q {
   display: flex;
-  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 28px 0;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.faq-q:hover { color: var(--soft-gold); }
+.faq-q-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: inherit;
+  line-height: 1.35;
+}
+.faq-icon {
+  width: 28px; height: 28px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.9rem;
+  color: var(--gold);
+  transition: all 0.3s;
+}
+.faq-item.open .faq-icon {
+  background: var(--gold);
+  color: var(--black);
+  border-color: var(--gold);
+  transform: rotate(45deg);
+}
+.faq-a {
+  display: none;
+  padding: 0 0 28px;
+}
+.faq-item.open .faq-a { display: block; }
+.faq-a p {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.85;
+}
+.faq-cta {
+  padding: 72px 0;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+.faq-cta-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
   flex-wrap: wrap;
 }
+.faq-cta-inner h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 300;
+  color: var(--text);
+}
+.faq-cta-inner p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+  font-weight: 300;
+}
 
-/* =============================================
-   CONTACT
-============================================= */
-#contact {
-  padding: 0;
-  background: var(--cream);
+/* ===========================================
+   THE WORK PAGE
+=========================================== */
+.work-header {
+  padding: 88px 0 72px;
+  border-bottom: 1px solid var(--border);
 }
-.contact-wrap {
+.work-header-inner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.work-header h1 {
+  font-size: clamp(2.4rem, 5.5vw, 4.8rem);
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.05;
+}
+.work-header h1 em { font-style: italic; color: var(--soft-gold); }
+.work-header-right p {
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  max-width: 280px;
+  text-align: right;
+  line-height: 1.75;
+}
+.work-stats {
+  padding: 56px 0;
+  border-bottom: 1px solid var(--border);
+}
+.work-stats-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
 }
-.contact-left {
-  background: var(--deep-black);
-  padding: 96px 72px;
+.work-stat {
+  background: var(--surface);
+  padding: 44px 40px;
+  text-align: center;
+}
+.work-stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem;
+  font-weight: 300;
+  color: var(--soft-gold);
+  line-height: 1;
+  display: block;
+  margin-bottom: 10px;
+}
+.work-stat-label {
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* Filter tabs */
+.work-filters {
+  padding: 44px 0 36px;
+  display: flex;
+  gap: 2px;
+  flex-wrap: wrap;
+}
+.filter-btn {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--gold);
+  color: var(--black);
+  border-color: var(--gold);
+}
+
+/* Deals grid */
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  margin-bottom: 80px;
+}
+.deal-card {
+  background: var(--surface);
+  padding: 40px 36px;
+  transition: background 0.3s;
+  cursor: default;
+}
+.deal-card:hover { background: var(--surface-2); }
+.deal-type {
+  display: inline-block;
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(186,156,97,0.08);
+  padding: 5px 12px;
+  margin-bottom: 22px;
+}
+.deal-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.deal-location {
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+  line-height: 1.4;
+}
+.deal-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.deal-meta span {
+  font-size: 0.65rem;
+  font-weight: 300;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.deal-meta span::before {
+  content: '';
+  display: block;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+/* Instagram strip */
+.work-instagram {
+  padding: 64px 0;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+.work-instagram-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.work-ig-text h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.work-ig-text p {
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  max-width: 360px;
+  line-height: 1.7;
+}
+.ig-handle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--soft-gold);
+  letter-spacing: 0.06em;
+  margin-top: 16px;
+}
+.ig-handle svg {
+  width: 18px; height: 18px;
+  stroke: var(--soft-gold);
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ===========================================
+   REVIEWS PAGE
+=========================================== */
+.reviews-header {
+  padding: 88px 0 72px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.reviews-header h1 {
+  font-size: clamp(2.4rem, 5.5vw, 4.8rem);
+  font-weight: 300;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+.reviews-header h1 em { font-style: italic; color: var(--soft-gold); }
+.reviews-header p {
+  font-size: 1.0rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  max-width: 440px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+/* Featured review */
+.review-featured {
+  padding: 88px 0;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.review-featured-inner {
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: center;
+}
+.review-stars {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  margin-bottom: 36px;
+}
+.star {
+  width: 14px; height: 14px;
+  background: var(--gold);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+.review-featured blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.4rem, 3vw, 2.1rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.55;
+  margin-bottom: 40px;
   position: relative;
 }
-.contact-left::before {
-  content: '';
+.review-featured blockquote::before {
+  content: '\201C';
   position: absolute;
-  top: 0; right: 0;
-  width: 1px;
-  height: 100%;
-  background: linear-gradient(to bottom, transparent, var(--gold), transparent);
-  opacity: 0.2;
+  top: -40px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 7rem;
+  color: var(--gold);
+  opacity: 0.08;
+  font-style: normal;
+  line-height: 1;
 }
-.contact-left h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2rem, 4vw, 3.2rem);
+.review-author {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+}
+.review-author-name {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 0.06em;
+  display: block;
+  margin-bottom: 4px;
+}
+.review-author-context {
+  font-size: 0.65rem;
   font-weight: 400;
-  color: #F8F8F8;
-  line-height: 1.1;
-  margin-bottom: 16px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
 }
-.contact-left h2 em { font-style: italic; color: var(--soft-gold); }
-.contact-left > p {
-  font-size: 0.92rem;
+
+/* Reviews grid */
+.reviews-grid-section {
+  padding: 80px 0;
+}
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+}
+.review-card {
+  background: var(--surface);
+  padding: 48px 40px;
+  transition: background 0.3s;
+}
+.review-card:hover { background: var(--surface-2); }
+.review-card .review-stars { justify-content: flex-start; margin-bottom: 24px; }
+.review-card blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.65;
+  margin-bottom: 28px;
+}
+.review-card .review-author { padding-top: 18px; }
+
+/* Reviews CTA */
+.reviews-cta {
+  padding: 80px 0;
+  text-align: center;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+.reviews-cta h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
   font-weight: 300;
-  color: rgba(255,255,255,0.45);
-  line-height: 1.75;
-  margin-bottom: 56px;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.reviews-cta p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  font-weight: 300;
+}
+.reviews-cta a[href*="google"],
+.reviews-cta .btn-outline { margin-left: 8px; }
+
+/* ===========================================
+   CONTACT PAGE
+=========================================== */
+#page-contact .page-wrap { padding: 0; }
+.contact-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: calc(100vh - var(--nav-h));
+}
+.contact-left {
+  background: var(--surface);
+  padding: 96px 72px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.contact-left h1 {
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  font-weight: 300;
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.05;
+}
+.contact-left h1 em { font-style: italic; color: var(--soft-gold); }
+.contact-left > p {
+  font-size: 0.96rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 60px;
   max-width: 320px;
 }
 .contact-items {
@@ -1071,19 +1306,19 @@ body {
 }
 .contact-item {
   display: flex;
-  gap: 20px;
+  gap: 18px;
   align-items: start;
 }
-.contact-item-icon {
-  width: 40px; height: 40px;
-  border: 1px solid rgba(186,156,97,0.3);
+.contact-icon {
+  width: 38px; height: 38px;
+  border: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
-.contact-item-icon svg {
-  width: 16px; height: 16px;
+.contact-icon svg {
+  width: 15px; height: 15px;
   stroke: var(--gold);
   fill: none;
   stroke-width: 1.5;
@@ -1091,7 +1326,7 @@ body {
   stroke-linejoin: round;
 }
 .contact-item-label {
-  font-size: 0.6rem;
+  font-size: 0.58rem;
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -1099,60 +1334,58 @@ body {
   display: block;
   margin-bottom: 4px;
 }
-.contact-item-value {
-  font-size: 0.92rem;
+.contact-item-val {
+  font-size: 0.9rem;
   font-weight: 300;
-  color: rgba(255,255,255,0.7);
+  color: var(--text-muted);
   line-height: 1.55;
 }
-.contact-item-value a {
-  color: inherit;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.contact-item-value a:hover { color: var(--soft-gold); }
+.contact-item-val a { transition: color 0.2s; }
+.contact-item-val a:hover { color: var(--soft-gold); }
 
 .contact-right {
-  background: var(--parchment);
+  background: var(--black);
   padding: 96px 72px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .contact-right h3 {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 400;
-  color: var(--ink);
+  color: var(--text);
   margin-bottom: 8px;
 }
 .contact-right > p {
   font-size: 0.85rem;
   font-weight: 300;
-  color: var(--muted);
+  color: var(--text-muted);
   margin-bottom: 44px;
   line-height: 1.7;
 }
-.form-group {
-  margin-bottom: 20px;
-}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-group { margin-bottom: 16px; }
 .form-group label {
   display: block;
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #9A8E7E;
+  color: var(--text-dim);
   margin-bottom: 8px;
 }
 .form-group input,
 .form-group select,
 .form-group textarea {
   width: 100%;
-  background: var(--cream);
-  border: 1px solid var(--sand);
+  background: var(--surface);
+  border: 1px solid var(--border);
   padding: 14px 18px;
   font-family: 'DM Sans', sans-serif;
   font-size: 0.9rem;
   font-weight: 300;
-  color: var(--ink);
+  color: var(--text);
   outline: none;
   transition: border-color 0.2s;
   border-radius: 0;
@@ -1163,782 +1396,1217 @@ body {
 .form-group select:focus,
 .form-group textarea:focus { border-color: var(--gold); }
 .form-group input::placeholder,
-.form-group textarea::placeholder { color: #B8B0A0; }
+.form-group textarea::placeholder { color: rgba(240,235,225,0.2); }
+.form-group select option { background: var(--surface); }
 .form-group textarea { resize: none; min-height: 110px; }
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-.form-submit {
-  margin-top: 8px;
-}
 .form-note {
-  margin-top: 16px;
   font-size: 0.7rem;
   font-weight: 300;
-  color: #9A8E7E;
-  line-height: 1.6;
+  color: var(--text-dim);
+  line-height: 1.65;
+  margin-top: 14px;
 }
+.form-submit { margin-top: 8px; }
+.btn-gold-full {
+  width: 100%;
+  background: var(--gold);
+  color: var(--black);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 16px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s;
+}
+.btn-gold-full:hover { background: var(--soft-gold); }
 
-/* =============================================
+/* ===========================================
    FOOTER
-============================================= */
+=========================================== */
 footer {
-  background: var(--deep-black);
-  padding: 80px 0 40px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 56px 0 32px;
 }
 .footer-main {
-  display: grid;
-  grid-template-columns: 1.8fr 1fr 1fr 1fr;
-  gap: 64px;
-  padding-bottom: 64px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.footer-brand h3 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.3rem;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #F8F8F8;
-  margin-bottom: 8px;
-}
-.footer-brand p {
-  font-size: 0.8rem;
-  font-weight: 300;
-  color: rgba(255,255,255,0.35);
-  line-height: 1.75;
-  margin-top: 16px;
-  max-width: 240px;
-}
-.footer-tagline {
-  font-size: 0.6rem;
-  font-weight: 400;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  opacity: 0.7;
-}
-.footer-col h4 {
-  font-size: 0.62rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.3);
-  margin-bottom: 24px;
-}
-.footer-col ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.footer-col ul li a {
-  font-size: 0.82rem;
-  font-weight: 300;
-  color: rgba(255,255,255,0.45);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.footer-col ul li a:hover { color: var(--soft-gold); }
-.footer-bottom {
-  padding-top: 32px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 32px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 28px;
+}
+.footer-brand h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.footer-brand p {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+}
+.footer-nav {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+.footer-nav a {
+  font-size: 0.68rem;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+.footer-nav a:hover { color: var(--gold); }
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 .footer-copy {
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 300;
-  color: rgba(255,255,255,0.2);
+  color: var(--text-dim);
   letter-spacing: 0.1em;
 }
 .footer-legal {
   display: flex;
-  gap: 24px;
+  gap: 20px;
 }
 .footer-legal a {
-  font-size: 0.65rem;
-  font-weight: 300;
-  color: rgba(255,255,255,0.2);
-  text-decoration: none;
-  letter-spacing: 0.1em;
+  font-size: 0.62rem;
+  color: var(--text-dim);
   transition: color 0.2s;
+  letter-spacing: 0.08em;
 }
 .footer-legal a:hover { color: var(--gold); }
 
-/* =============================================
+/* ===========================================
    REVEAL ANIMATIONS
-============================================= */
+=========================================== */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.75s ease, transform 0.75s ease;
+  transform: translateY(22px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
 }
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.reveal.visible { opacity: 1; transform: translateY(0); }
 .reveal-d1 { transition-delay: 0.1s; }
 .reveal-d2 { transition-delay: 0.2s; }
 .reveal-d3 { transition-delay: 0.3s; }
 .reveal-d4 { transition-delay: 0.4s; }
 
-/* =============================================
+/* ===========================================
    RESPONSIVE
-============================================= */
+=========================================== */
 @media (max-width: 1024px) {
-  .hero-inner { gap: 48px; }
-  .about-grid { gap: 60px; }
-  .why-left, .why-right { padding: 56px 48px; }
+  .portals-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-pillars-grid { grid-template-columns: repeat(2, 1fr); }
+  .work-grid { grid-template-columns: repeat(2, 1fr); }
+  .reviews-grid { grid-template-columns: 1fr; }
   .contact-left, .contact-right { padding: 72px 48px; }
-  .footer-main { grid-template-columns: 1fr 1fr; gap: 40px; }
 }
 @media (max-width: 900px) {
-  .hero-inner { grid-template-columns: 1fr; gap: 56px; padding-bottom: 64px; }
-  .hero-right { align-items: stretch; }
-  .about-grid { grid-template-columns: 1fr; gap: 48px; }
-  .about-badge { display: none; }
-  .services-grid { grid-template-columns: 1fr; }
-  .closings-grid { grid-template-columns: 1fr; }
-  .closings-header { flex-direction: column; align-items: flex-start; gap: 16px; }
-  .closings-header p { text-align: left; }
-  .testimonials-grid { grid-template-columns: 1fr; }
-  .why-grid { grid-template-columns: 1fr; }
-  .contact-wrap { grid-template-columns: 1fr; }
-  .footer-main { grid-template-columns: 1fr 1fr; }
-  .nav-links { display: none; }
-  .nav-cta { display: none; }
+  :root { --nav-h: 72px; }
+  .nav-left, .nav-right, .nav-cta { display: none; }
   .nav-toggle { display: flex; }
-  #hero { padding-top: var(--nav-h); }
+  .about-hero-inner { grid-template-columns: 1fr; }
+  .about-photo-col { min-height: 360px; }
+  .about-text-col { padding: 48px 32px; }
+  .home-about-inner { grid-template-columns: 1fr; }
+  .home-about-text { padding: 48px 32px; border-left: none; border-top: 1px solid var(--border); }
+  .home-about-photo { height: 320px; }
+  .service-row { grid-template-columns: 1fr; }
+  .contact-split { grid-template-columns: 1fr; }
+  .contact-left { padding: 64px 32px; }
+  .contact-right { padding: 64px 32px; }
+  .work-stats-grid { grid-template-columns: 1fr; }
+  .work-header-inner { flex-direction: column; align-items: flex-start; }
+  .work-header-right p { text-align: left; }
+  .faq-cta-inner { flex-direction: column; align-items: flex-start; }
+  .work-instagram-inner { flex-direction: column; align-items: flex-start; }
+  .footer-main { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+  .about-pillars-grid { grid-template-columns: 1fr; }
 }
-@media (max-width: 600px) {
-  :root { --nav-h: 64px; }
-  .footer-main { grid-template-columns: 1fr; gap: 32px; }
+@media (max-width: 640px) {
+  :root { --page-pad: 32px; }
+  .container { padding: 0 24px; }
+  .portals-grid { grid-template-columns: 1fr; }
+  .work-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
-  .about-pillars { grid-template-columns: 1fr; }
-  .hero-stats { gap: 2px; }
-  .why-left, .why-right { padding: 48px 32px; }
-  .contact-left, .contact-right { padding: 56px 32px; }
-  #cta, #testimonials, #services, #about, #why, #closings { padding: 80px 0; }
+  .home-portals, .home-cta-strip { padding: 64px 0; }
+  .services-list { padding: 48px 0; }
+  .service-label-col { padding: 40px 28px; }
+  .service-content-col { padding: 40px 28px; }
 }
+
 </style>
 </head>
 <body>
 
-<!-- ============================================
+<!-- ==========================================
      NAVIGATION
-============================================= -->
-<nav id="nav" class="dark-nav">
+========================================== -->
+<nav id="nav">
   <div class="nav-inner">
 
-    <!-- Left: nav links -->
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#closings">Closings</a></li>
-      <li><a href="#contact">Work With Me</a></li>
-    </ul>
+    <div class="nav-left">
+      <a href="#" onclick="nav('about')" data-page="about">About Me</a>
+      <a href="#" onclick="nav('services')" data-page="services">How I Can Help</a>
+      <a href="#" onclick="nav('faq')" data-page="faq">FAQ</a>
+    </div>
 
-    <!-- Center: logo mark (absolutely positioned) -->
-    <a href="#hero" class="nav-logo" aria-label="Kaplunov Law – Home">
+    <div class="nav-logo" onclick="nav('home')" role="button" tabindex="0" aria-label="Kaplunov Law — Home">
       <img
         src="https://raw.githubusercontent.com/skylar-ship-it/kaplunov-law-landing/main/kaplunov_transparent.png"
         alt="Kaplunov Law"
-        class="nav-logo-img"
       >
-    </a>
-
-    <!-- Right: CTA + mobile toggle -->
-    <a href="#contact" class="nav-cta">Schedule a Consultation</a>
-    <div class="nav-toggle" id="navToggle" aria-label="Open menu">
-      <span></span><span></span><span></span>
     </div>
+
+    <div class="nav-right">
+      <a href="#" onclick="nav('work')" data-page="work">The Work</a>
+      <a href="#" onclick="nav('reviews')" data-page="reviews">What They Say</a>
+      <a href="#" onclick="nav('contact')" data-page="contact" class="nav-cta">Contact</a>
+    </div>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
 
   </div>
 </nav>
 
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#about"    onclick="closeMobile()">About</a>
-  <a href="#services" onclick="closeMobile()">Services</a>
-  <a href="#closings" onclick="closeMobile()">Closings</a>
-  <a href="#why"      onclick="closeMobile()">Why Kaplunov Law</a>
-  <a href="#contact"  onclick="closeMobile()" class="mobile-cta">Schedule a Consultation</a>
+  <a href="#" onclick="nav('home');closeMobile()">Home</a>
+  <a href="#" onclick="nav('about');closeMobile()" data-page="about">About Me</a>
+  <a href="#" onclick="nav('services');closeMobile()" data-page="services">How I Can Help</a>
+  <a href="#" onclick="nav('faq');closeMobile()" data-page="faq">FAQ</a>
+  <a href="#" onclick="nav('work');closeMobile()" data-page="work">The Work</a>
+  <a href="#" onclick="nav('reviews');closeMobile()" data-page="reviews">What They Say</a>
+  <a href="#" onclick="nav('contact');closeMobile()" class="mobile-cta-link">Get In Touch →</a>
 </div>
 
-<!-- ============================================
-     HERO
-============================================= -->
-<section id="hero">
+<!-- ==========================================
+     HOME PAGE
+========================================== -->
+<div id="page-home" class="page active">
 
-  <!-- Background drone video -->
-  <video
-    class="hero-video"
-    src="https://raw.githubusercontent.com/skylar-ship-it/kaplunov-law-landing/main/drone.mp4"
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="auto"
-    aria-hidden="true"
-  ></video>
-
-  <div class="hero-inner">
-    <div class="hero-left">
-      <p class="hero-eyebrow">Chicago Real Estate Attorney</p>
-      <h1 class="hero-title">Close with<br><em>clarity</em> and<br>confidence.</h1>
-      <p class="hero-body">Kaplunov Law is a boutique real estate firm built on a singular belief: premium legal guidance should be genuinely accessible. From your first home to your growing portfolio — you deserve counsel that takes your matter seriously.</p>
-      <div class="hero-actions">
-        <a href="#contact" class="btn-gold">Schedule a Consultation</a>
-        <a href="#services" class="btn-outline-light">Explore Services</a>
+  <!-- Hero -->
+  <section class="home-hero">
+    <video class="home-hero-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+      <source src="https://raw.githubusercontent.com/skylar-ship-it/kaplunov-law-landing/main/drone.mp4" type="video/mp4">
+    </video>
+    <div class="home-hero-overlay"></div>
+    <div class="home-hero-content">
+      <p class="home-hero-eyebrow">Chicago Real Estate Attorney</p>
+      <h1 class="home-hero-title">Close with<br><em>clarity.</em></h1>
+      <p class="home-hero-sub">Boutique legal counsel for buyers, sellers, and investors who expect more from their attorney.</p>
+      <div class="home-hero-actions">
+        <a href="#" onclick="nav('contact')" class="btn-gold">Get In Touch</a>
+        <a href="#" onclick="nav('services')" class="btn-outline">How I Can Help</a>
       </div>
     </div>
-    <div class="hero-right">
-      <div class="hero-stats">
-        <div class="stat-row reveal">
-          <span class="stat-number">100+</span>
-          <span class="stat-label">Successful closings across<br>Chicago and the surrounding area</span>
+    <div class="home-hero-scroll" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Portal Cards -->
+  <section class="home-portals">
+    <div class="container">
+      <div class="portals-header reveal">
+        <span class="page-eyebrow" style="justify-content:center; margin-bottom:12px;">Navigate</span>
+        <h2>Everything you need,<br><em style="font-style:italic; color:var(--soft-gold);">exactly where you need it.</em></h2>
+      </div>
+      <div class="portals-grid">
+        <div class="portal-card reveal" onclick="nav('services')">
+          <span class="portal-num">01</span>
+          <h3 class="portal-title">How I<br>Can Help</h3>
+          <p class="portal-desc">Residential closings, investment acquisitions, commercial leases — and everything in between. Flat-rate pricing, no surprises.</p>
+          <span class="portal-arrow">Explore Services</span>
         </div>
-        <div class="stat-row reveal reveal-d1">
-          <span class="stat-number">IL</span>
-          <span class="stat-label">Licensed Illinois attorney<br>serving clients statewide</span>
+        <div class="portal-card reveal reveal-d1" onclick="nav('work')">
+          <span class="portal-num">02</span>
+          <h3 class="portal-title">The<br>Work</h3>
+          <p class="portal-desc">100+ closings across Chicago and beyond. Browse a selection of completed transactions and recent matters.</p>
+          <span class="portal-arrow">See The Work</span>
         </div>
-        <div class="stat-row reveal reveal-d2">
-          <span class="stat-number">$0</span>
-          <span class="stat-label">Surprise fees, ever. Transparent<br>flat-rate pricing on every matter</span>
+        <div class="portal-card reveal reveal-d2" onclick="nav('reviews')">
+          <span class="portal-num">03</span>
+          <h3 class="portal-title">What<br>They Say</h3>
+          <p class="portal-desc">From first-time homebuyers to seasoned investors — hear from clients who've been through it with Kaplunov Law.</p>
+          <span class="portal-arrow">Read Reviews</span>
         </div>
+        <div class="portal-card reveal reveal-d3" onclick="nav('faq')">
+          <span class="portal-num">04</span>
+          <h3 class="portal-title">FAQ</h3>
+          <p class="portal-desc">Answers to the questions every buyer, seller, and investor asks — before they know to ask them.</p>
+          <span class="portal-arrow">Get Answers</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Strip -->
+  <div class="home-about-strip">
+    <div class="home-about-inner">
+      <div class="home-about-photo">
+        <img
+          src="https://raw.githubusercontent.com/skylar-ship-it/kaplunov-law-landing/main/camila-photo.png"
+          alt="Camila Kaplunov"
+        >
+      </div>
+      <div class="home-about-text">
+        <span class="page-eyebrow" style="justify-content:flex-start;">Meet Camila</span>
+        <h3>Built on one belief:<br>premium counsel<br>should be <em>accessible.</em></h3>
+        <p>I'm Camila Kaplunov — founder, attorney, and the person who personally handles your matter from first call through closing. No associates. No hand-offs. Just precise, attentive legal work every time.</p>
+        <a href="#" onclick="nav('about')" class="btn-ghost-gold">My Full Story</a>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ============================================
-     TICKER
-============================================= -->
-<div id="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <!-- Set 1 -->
-    <span class="ticker-item">Residential Closings <span class="ticker-dot"></span></span>
-    <span class="ticker-item">First-Time Homebuyers <span class="ticker-dot"></span></span>
-    <span class="ticker-item">Real Estate Investing <span class="ticker-dot"></span></span>
-    <span class="ticker-item">Commercial Leasing <span class="ticker-dot"></span></span>
-    <span class="ticker-item">Multi-Family Properties <span class="ticker-dot"></span></span>
-    <span class="ticker-item">Contract Review &amp; Negotiation <span class="ticker-dot"></span></span>
-    <span class="ticker-item">Buyer &amp; Seller Representation <span class="ticker-dot"></span></span>
-    <span class="ticker-item">Investment Portfolio Closings <span class="ticker-dot"></span></span>
-    <span class="ticker-item">Chicago Area Real Estate <span class="ticker-dot"></span></span>
-    <!-- Set 2 (duplicate for seamless loop) -->
-    <span class="ticker-item">Residential Closings <span class="ticker-dot"></span></span>
-    <span class="ticker-item">First-Time Homebuyers <span class="ticker-dot"></span></span>
-    <span class="ticker-item">Real Estate Investing <span class="ticker-dot"></span></span>
-    <span class="ticker-item">Commercial Leasing <span class="ticker-dot"></span></span>
-    <span class="ticker-item">Multi-Family Properties <span class="ticker-dot"></span></span>
-    <span class="ticker-item">Contract Review &amp; Negotiation <span class="ticker-dot"></span></span>
-    <span class="ticker-item">Buyer &amp; Seller Representation <span class="ticker-dot"></span></span>
-    <span class="ticker-item">Investment Portfolio Closings <span class="ticker-dot"></span></span>
-    <span class="ticker-item">Chicago Area Real Estate <span class="ticker-dot"></span></span>
-  </div>
-</div>
-
-<!-- ============================================
-     ABOUT
-============================================= -->
-<section id="about">
-  <div class="container">
-    <div class="about-grid">
-      <div class="about-image-col reveal">
-        <div class="about-photo">
-          <img
-            src="https://raw.githubusercontent.com/skylar-ship-it/kaplunov-law-landing/main/camila-photo.png"
-            alt="Camila Kaplunov — Chicago Real Estate Attorney"
-            style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"
-          >
-        </div>
-        <div class="about-badge">
-          <span class="about-badge-num">100+</span>
-          <span class="about-badge-label">Closings Completed</span>
-        </div>
-      </div>
-      <div class="about-content">
-        <span class="section-tag">About Camila</span>
-        <h2 class="about-title reveal">A boutique firm that<br>treats every deal as<br><em>the only deal.</em></h2>
-        <p class="about-body reveal">I'm Camila Kaplunov — a licensed Illinois real estate attorney and the founder of Kaplunov Law. I built this firm because I believed the legal side of real estate transactions deserved better: better communication, clearer guidance, and a standard of care that actually matches what's at stake.</p>
-        <p class="about-body reveal">Whether you're navigating your first closing or your fifteenth investment property, I bring the same level of attention, precision, and honest counsel to every transaction. No paralegal handoffs. No feeling like a number. Just thoughtful legal support, start to finish.</p>
-        <div class="about-pillars reveal">
-          <div class="pillar">
-            <span class="pillar-icon">P</span>
-            <h4>Transparent Pricing</h4>
-            <p>Flat-rate fees on every matter. You know the cost before we begin — no surprises at closing.</p>
-          </div>
-          <div class="pillar">
-            <span class="pillar-icon">A</span>
-            <h4>Direct Attention</h4>
-            <p>You work with me, not a junior associate. Every call, every question, every document — handled personally.</p>
-          </div>
-          <div class="pillar">
-            <span class="pillar-icon">E</span>
-            <h4>Expert Guidance</h4>
-            <p>Deep knowledge of Illinois real estate law and Chicago-area transactions, applied to every deal.</p>
-          </div>
-          <div class="pillar">
-            <span class="pillar-icon">L</span>
-            <h4>Local Expertise</h4>
-            <p>Rooted in Chicago. I understand the neighborhoods, the nuances, and the people behind the properties.</p>
-          </div>
-        </div>
-        <a href="#contact" class="btn-outline-dark reveal">Work With Me</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================
-     SERVICES
-============================================= -->
-<section id="services">
-  <div class="container">
-    <div class="section-header-centered reveal">
-      <span class="section-tag">Practice Areas</span>
-      <h2>Legal services built for<br><em>every stage of your journey.</em></h2>
-      <p>From your first home purchase to a multi-unit investment portfolio, Kaplunov Law provides precise, attentive legal counsel at every step of the transaction.</p>
-    </div>
-    <div class="services-grid">
-      <div class="service-card reveal">
-        <span class="service-num">01</span>
-        <h3>Residential Closings</h3>
-        <p>A smooth, stress-free closing is not a luxury — it's your right. I handle every document, deadline, and negotiation with the thoroughness your transaction deserves, so you can sign with complete confidence.</p>
-        <div class="service-tags">
-          <span class="service-tag">Purchase Closings</span>
-          <span class="service-tag">Sale Closings</span>
-          <span class="service-tag">Refinancing</span>
-          <span class="service-tag">Title Review</span>
-        </div>
-      </div>
-      <div class="service-card reveal reveal-d1">
-        <span class="service-num">02</span>
-        <h3>Real Estate Investing</h3>
-        <p>Building wealth through property demands legal precision at every step. I work alongside investors to structure acquisitions, review contracts, and close deals efficiently — protecting your interests from offer to deed.</p>
-        <div class="service-tags">
-          <span class="service-tag">Multi-Family</span>
-          <span class="service-tag">Portfolio Closings</span>
-          <span class="service-tag">Investment Contracts</span>
-          <span class="service-tag">Due Diligence</span>
-        </div>
-      </div>
-      <div class="service-card reveal reveal-d2">
-        <span class="service-num">03</span>
-        <h3>Commercial &amp; Leasing</h3>
-        <p>Commercial transactions carry elevated risk and complexity. I bring careful attention to lease negotiation, commercial closings, and contract review — ensuring your business interests are protected with the same rigor as your personal ones.</p>
-        <div class="service-tags">
-          <span class="service-tag">Commercial Leasing</span>
-          <span class="service-tag">Lease Negotiation</span>
-          <span class="service-tag">Commercial Closings</span>
-          <span class="service-tag">Contract Review</span>
-        </div>
-      </div>
-    </div>
-    <div style="text-align: center; margin-top: 48px;" class="reveal">
-      <a href="#contact" class="btn-gold">Discuss Your Matter</a>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================
-     RECENT CLOSINGS
-============================================= -->
-<section id="closings">
-  <div class="container">
-    <div class="closings-header reveal">
-      <div>
-        <span class="section-tag light">Recent Closings</span>
-        <h2>Transactions closed<br>with <em>care</em> and precision.</h2>
-      </div>
-      <p>A selection of recent matters — representing the range of clients and deals Kaplunov Law serves across the Chicago area.</p>
-    </div>
-    <div class="closings-grid">
-      <div class="closing-card reveal">
-        <span class="closing-type">Residential Purchase</span>
-        <div class="closing-price">$485,000</div>
-        <div class="closing-address">Lincoln Park, Chicago, IL</div>
-        <div class="closing-details">
-          <span class="closing-detail">3 Bed · 2 Bath</span>
-          <span class="closing-detail">Single Family</span>
-          <span class="closing-detail">First-Time Buyer</span>
-        </div>
-      </div>
-      <div class="closing-card reveal reveal-d1">
-        <span class="closing-type">Investment Acquisition</span>
-        <div class="closing-price">$1,200,000</div>
-        <div class="closing-address">Logan Square, Chicago, IL</div>
-        <div class="closing-details">
-          <span class="closing-detail">6-Unit Multi-Family</span>
-          <span class="closing-detail">Portfolio Expansion</span>
-        </div>
-      </div>
-      <div class="closing-card reveal reveal-d2">
-        <span class="closing-type">Residential Sale</span>
-        <div class="closing-price">$720,000</div>
-        <div class="closing-address">Wicker Park, Chicago, IL</div>
-        <div class="closing-details">
-          <span class="closing-detail">4 Bed · 3 Bath</span>
-          <span class="closing-detail">Seller Representation</span>
-        </div>
-      </div>
-      <div class="closing-card reveal">
-        <span class="closing-type">Commercial Lease</span>
-        <div class="closing-price">$8,400/mo</div>
-        <div class="closing-address">River North, Chicago, IL</div>
-        <div class="closing-details">
-          <span class="closing-detail">Retail Storefront</span>
-          <span class="closing-detail">5-Year Term</span>
-          <span class="closing-detail">Lease Negotiation</span>
-        </div>
-      </div>
-      <div class="closing-card reveal reveal-d1">
-        <span class="closing-type">Condo Purchase</span>
-        <div class="closing-price">$310,000</div>
-        <div class="closing-address">South Loop, Chicago, IL</div>
-        <div class="closing-details">
-          <span class="closing-detail">2 Bed · 2 Bath</span>
-          <span class="closing-detail">New Construction</span>
-        </div>
-      </div>
-      <div class="closing-card reveal reveal-d2">
-        <span class="closing-type">Investment Portfolio</span>
-        <div class="closing-price">$2,100,000</div>
-        <div class="closing-address">Pilsen &amp; Bridgeport, Chicago, IL</div>
-        <div class="closing-details">
-          <span class="closing-detail">3-Property Acquisition</span>
-          <span class="closing-detail">Multi-Family</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================
-     TESTIMONIALS
-============================================= -->
-<section id="testimonials">
-  <div class="container">
-    <div class="section-header-centered reveal">
-      <span class="section-tag">Client Testimonials</span>
-      <h2>What clients say about<br><em>working with Camila.</em></h2>
-    </div>
-    <div class="testimonials-grid">
-      <div class="testimonial-card reveal">
-        <div class="testimonial-stars">
-          <div class="star"></div><div class="star"></div><div class="star"></div>
-          <div class="star"></div><div class="star"></div>
-        </div>
-        <p class="testimonial-quote">Camila made our first home purchase feel completely manageable. She explained every document in plain language, was always reachable when we had questions, and we never once felt like we were in the dark. I can't imagine going through a closing without her.</p>
-        <div class="testimonial-author">
-          <div class="testimonial-name">Marcus &amp; Priya T.</div>
-          <div class="testimonial-context">Residential Purchase · Lincoln Park</div>
-        </div>
-      </div>
-      <div class="testimonial-card reveal reveal-d1">
-        <div class="testimonial-stars">
-          <div class="star"></div><div class="star"></div><div class="star"></div>
-          <div class="star"></div><div class="star"></div>
-        </div>
-        <p class="testimonial-quote">I've worked with other real estate attorneys and the difference with Kaplunov Law is immediately obvious. Camila is sharp, responsive, and genuinely invested in the outcome of your deal. She caught issues in my contract that could have cost me tens of thousands. Worth every penny.</p>
-        <div class="testimonial-author">
-          <div class="testimonial-name">Daniel R.</div>
-          <div class="testimonial-context">Investment Acquisition · Logan Square</div>
-        </div>
-      </div>
-      <div class="testimonial-card reveal reveal-d2">
-        <div class="testimonial-stars">
-          <div class="star"></div><div class="star"></div><div class="star"></div>
-          <div class="star"></div><div class="star"></div>
-        </div>
-        <p class="testimonial-quote">As a small business owner signing my first commercial lease, I was intimidated by the process. Camila walked me through everything, negotiated terms I didn't even know I could push back on, and made sure I understood exactly what I was signing. Exceptional experience.</p>
-        <div class="testimonial-author">
-          <div class="testimonial-name">Sofia M.</div>
-          <div class="testimonial-context">Commercial Lease · River North</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================
-     WHY KAPLUNOV LAW
-============================================= -->
-<section id="why">
-  <div class="container">
-    <div class="why-grid reveal">
-      <div class="why-left">
-        <span class="section-tag">Why Kaplunov Law</span>
-        <h2>The difference a<br>boutique firm<br><em>actually makes.</em></h2>
-        <div class="why-list">
-          <div class="why-item">
-            <span class="why-item-num">1</span>
-            <div>
-              <h4>You work directly with the attorney</h4>
-              <p>No associates, no hand-offs, no wondering who's handling your deal. When you hire Kaplunov Law, you get Camila — from the initial call through the closing table.</p>
-            </div>
-          </div>
-          <div class="why-item">
-            <span class="why-item-num">2</span>
-            <div>
-              <h4>Flat-rate, transparent pricing</h4>
-              <p>Legal fees should never be a source of anxiety. Every service is quoted upfront at a flat rate — no hourly billing, no hidden charges, no closing-day surprises.</p>
-            </div>
-          </div>
-          <div class="why-item">
-            <span class="why-item-num">3</span>
-            <div>
-              <h4>Responsive, clear communication</h4>
-              <p>Real estate moves fast. Camila is available, communicative, and speaks plainly — so you always know exactly where your matter stands and what comes next.</p>
-            </div>
-          </div>
-          <div class="why-item">
-            <span class="why-item-num">4</span>
-            <div>
-              <h4>Deeply local, genuinely invested</h4>
-              <p>Every transaction reflects a client's real life, real goals, and real money. That weight is taken seriously — always. No matter the deal size.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="why-right">
-        <p class="why-quote">"The goal was never to be the biggest firm in Chicago. It was to be the one clients trust completely, recommend without hesitation, and return to every time."</p>
-        <div class="why-areas">
-          <span class="why-areas-label">Areas Served</span>
-          <div class="why-areas-list">
-            <span class="why-area-tag">Lincoln Park</span>
-            <span class="why-area-tag">Wicker Park</span>
-            <span class="why-area-tag">Logan Square</span>
-            <span class="why-area-tag">River North</span>
-            <span class="why-area-tag">West Loop</span>
-            <span class="why-area-tag">South Loop</span>
-            <span class="why-area-tag">Pilsen</span>
-            <span class="why-area-tag">Hyde Park</span>
-            <span class="why-area-tag">Evanston</span>
-            <span class="why-area-tag">Oak Park</span>
-            <span class="why-area-tag">Naperville</span>
-            <span class="why-area-tag">All of Illinois</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================
-     CTA
-============================================= -->
-<section id="cta">
-  <div class="container">
-    <div class="cta-inner">
-      <span class="section-tag reveal">Ready to Begin</span>
-      <h2 class="reveal">The right counsel<br>makes every difference.<br><em>Let's talk.</em></h2>
-      <p class="reveal">Whether you're buying your first home, closing your next investment, or navigating a commercial lease — Kaplunov Law is ready to guide you through it with clarity, care, and complete transparency.</p>
-      <div class="cta-actions reveal">
-        <a href="#contact" class="btn-gold">Schedule a Consultation</a>
-        <a href="#services" class="btn-outline-dark">View Services</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================
-     CONTACT
-============================================= -->
-<section id="contact">
-  <div class="contact-wrap">
-
-    <div class="contact-left reveal">
-      <span class="section-tag light">Get In Touch</span>
+  <!-- CTA Strip -->
+  <section class="home-cta-strip">
+    <div class="container">
+      <span class="page-eyebrow" style="justify-content:center;">Ready?</span>
       <h2>Let's talk about<br>your <em>next move.</em></h2>
-      <p>Reach out to schedule a consultation. I personally respond to every inquiry and will get back to you within one business day.</p>
-      <div class="contact-items">
-        <div class="contact-item">
-          <div class="contact-item-icon">
-            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.79 19.79 19.79 0 0118 1.18 2 2 0 0120 3.18v3M15 7a4 4 0 010 8M9 12h3"/><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.79 19.79 19.79 0 010 2a2 2 0 012-2h3.18a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 6.25A16 16 0 0015.73 15.07l.62-.62a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-          </div>
-          <div>
-            <span class="contact-item-label">Phone</span>
-            <div class="contact-item-value"><a href="tel:+13125550000">(312) 555-0000</a></div>
-          </div>
+      <p>Whether you're buying your first home or closing your tenth investment deal — I'm ready when you are.</p>
+      <div class="home-cta-actions">
+        <a href="#" onclick="nav('contact')" class="btn-gold">Schedule a Consultation</a>
+        <a href="#" onclick="nav('services')" class="btn-outline">View Services</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <h3>Kaplunov Law</h3>
+          <p>Chicago Real Estate Attorney · Licensed in Illinois</p>
         </div>
-        <div class="contact-item">
-          <div class="contact-item-icon">
-            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </div>
-          <div>
-            <span class="contact-item-label">Email</span>
-            <div class="contact-item-value"><a href="mailto:camila@kaplunovlaw.com">camila@kaplunovlaw.com</a></div>
-          </div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-item-icon">
-            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          </div>
-          <div>
-            <span class="contact-item-label">Location</span>
-            <div class="contact-item-value">Chicago, Illinois<br>Serving all of Cook County &amp; Northern IL</div>
-          </div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-item-icon">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          </div>
-          <div>
-            <span class="contact-item-label">Availability</span>
-            <div class="contact-item-value">Mon – Fri: 9am – 6pm<br>Flexible consultations available</div>
-          </div>
+        <nav class="footer-nav">
+          <a href="#" onclick="nav('about')">About Me</a>
+          <a href="#" onclick="nav('services')">How I Can Help</a>
+          <a href="#" onclick="nav('faq')">FAQ</a>
+          <a href="#" onclick="nav('work')">The Work</a>
+          <a href="#" onclick="nav('reviews')">What They Say</a>
+          <a href="#" onclick="nav('contact')">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">&copy; 2026 Kaplunov Law LLC · All Rights Reserved</span>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Attorney Advertising Disclaimer</a>
         </div>
       </div>
     </div>
+  </footer>
+</div>
 
-    <div class="contact-right reveal">
-      <span class="section-tag">Consultation Request</span>
-      <h3>Tell me about your matter</h3>
-      <p>Fill out the form below and I'll be in touch to schedule a time that works for you.</p>
-      <form onsubmit="return false;">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="fname">First Name</label>
-            <input type="text" id="fname" placeholder="First name">
+<!-- ==========================================
+     ABOUT PAGE
+========================================== -->
+<div id="page-about" class="page">
+  <div style="padding-top: var(--nav-h);">
+
+    <section class="about-hero">
+      <div class="container">
+        <div class="about-hero-inner">
+          <div class="about-photo-col">
+            <img
+              src="https://raw.githubusercontent.com/skylar-ship-it/kaplunov-law-landing/main/camila-photo.png"
+              alt="Camila Kaplunov — Chicago Real Estate Attorney"
+            >
           </div>
-          <div class="form-group">
-            <label for="lname">Last Name</label>
-            <input type="text" id="lname" placeholder="Last name">
+          <div class="about-text-col">
+            <span class="page-eyebrow">About</span>
+            <h1>Camila<br><em>Kaplunov</em></h1>
+            <span class="about-role">Founder &amp; Attorney · Kaplunov Law LLC</span>
+            <div class="about-bio">
+              <p>I built Kaplunov Law because I believed real estate transactions deserved better — better communication, clearer guidance, and a standard of care that actually matches what's at stake.</p>
+              <p>I'm a licensed Illinois real estate attorney serving buyers, sellers, and investors across Chicago and the surrounding area. Every matter I take on receives my full, personal attention — from the first conversation to the moment you sign.</p>
+              <p>No associates. No paralegal hand-offs. No wondering who's handling your deal. When you hire Kaplunov Law, you get me.</p>
+            </div>
           </div>
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" placeholder="your@email.com">
+      </div>
+    </section>
+
+    <section class="about-pillars">
+      <div class="container">
+        <span class="page-eyebrow">What Sets Me Apart</span>
+        <div class="about-pillars-grid">
+          <div class="about-pillar reveal">
+            <span class="pillar-label">01</span>
+            <h4>Direct Attention</h4>
+            <p>You work with me — the attorney — from the first call through closing. Every document, every question, every call handled personally.</p>
           </div>
-          <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" placeholder="(312) 000-0000">
+          <div class="about-pillar reveal reveal-d1">
+            <span class="pillar-label">02</span>
+            <h4>Transparent Pricing</h4>
+            <p>Flat-rate fees on every matter. You know the cost before we begin — no hourly surprises, no hidden charges at the closing table.</p>
+          </div>
+          <div class="about-pillar reveal reveal-d2">
+            <span class="pillar-label">03</span>
+            <h4>Deep Local Knowledge</h4>
+            <p>Rooted in Chicago. I understand the neighborhoods, the nuances, and the people behind every transaction in this market.</p>
+          </div>
+          <div class="about-pillar reveal reveal-d3">
+            <span class="pillar-label">04</span>
+            <h4>Genuinely Accessible</h4>
+            <p>Premium legal service doesn't have to feel cold or distant. I'm responsive, plain-spoken, and always in your corner.</p>
           </div>
         </div>
-        <div class="form-group">
-          <label for="service">Type of Matter</label>
-          <select id="service">
-            <option value="" disabled selected>Select a service</option>
-            <option>Residential Purchase Closing</option>
-            <option>Residential Sale Closing</option>
-            <option>Real Estate Investment / Multi-Family</option>
-            <option>Commercial Lease</option>
-            <option>Contract Review</option>
-            <option>Refinancing</option>
-            <option>Other / Not Sure Yet</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="message">Tell Me More</label>
-          <textarea id="message" placeholder="A brief description of your matter — property type, location, timeline, any questions you have."></textarea>
-        </div>
-        <div class="form-submit">
-          <button type="submit" class="btn-gold" style="width: 100%; cursor: pointer; font-family: inherit;">Send Inquiry</button>
-        </div>
-        <p class="form-note">All inquiries are confidential. I personally review every submission and respond within one business day. No sales calls, no pressure.</p>
-      </form>
+      </div>
+    </section>
+
+    <section class="about-philosophy">
+      <div class="container">
+        <blockquote>
+          "The goal was never to be the biggest firm in Chicago. It was to be the one clients trust completely, recommend without hesitation, and return to every time."
+        </blockquote>
+        <cite>— Camila Kaplunov, Founder</cite>
+      </div>
+    </section>
+
+    <div class="about-cta-bar">
+      <div class="container">
+        <p>Ready to work with an attorney who's actually in your corner?</p>
+        <a href="#" onclick="nav('contact')" class="btn-gold">Schedule a Consultation</a>
+      </div>
     </div>
 
+    <footer>
+      <div class="container">
+        <div class="footer-main">
+          <div class="footer-brand"><h3>Kaplunov Law</h3><p>Chicago Real Estate Attorney · Licensed in Illinois</p></div>
+          <nav class="footer-nav">
+            <a href="#" onclick="nav('about')">About Me</a>
+            <a href="#" onclick="nav('services')">How I Can Help</a>
+            <a href="#" onclick="nav('faq')">FAQ</a>
+            <a href="#" onclick="nav('work')">The Work</a>
+            <a href="#" onclick="nav('reviews')">What They Say</a>
+            <a href="#" onclick="nav('contact')">Contact</a>
+          </nav>
+        </div>
+        <div class="footer-bottom">
+          <span class="footer-copy">&copy; 2026 Kaplunov Law LLC · All Rights Reserved</span>
+          <div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Attorney Advertising Disclaimer</a></div>
+        </div>
+      </div>
+    </footer>
   </div>
-</section>
+</div>
 
-<!-- ============================================
-     FOOTER
-============================================= -->
-<footer>
-  <div class="container">
-    <div class="footer-main">
-      <div class="footer-brand">
-        <h3>Kaplunov Law</h3>
-        <span class="footer-tagline">Chicago Real Estate Attorney</span>
-        <p>A boutique real estate law firm serving buyers, sellers, and investors across the Chicago area with precision, transparency, and genuine care.</p>
+<!-- ==========================================
+     SERVICES / HOW I CAN HELP
+========================================== -->
+<div id="page-services" class="page">
+  <div style="padding-top: var(--nav-h);">
+
+    <section class="services-header">
+      <div class="container">
+        <span class="page-eyebrow">Services</span>
+        <h1>How I Can<br><em>Help You.</em></h1>
+        <p>Real estate law covers more ground than most people realize. Here's what I do — and how I can make your transaction smoother, safer, and stress-free.</p>
       </div>
-      <div class="footer-col">
-        <h4>Services</h4>
-        <ul>
-          <li><a href="#services">Residential Closings</a></li>
-          <li><a href="#services">Real Estate Investing</a></li>
-          <li><a href="#services">Commercial Leasing</a></li>
-          <li><a href="#services">Contract Review</a></li>
-          <li><a href="#services">Buyer Representation</a></li>
-          <li><a href="#services">Seller Representation</a></li>
-        </ul>
+    </section>
+
+    <section class="services-list">
+      <div class="container">
+        <div class="service-row reveal">
+          <div class="service-label-col">
+            <span class="service-num">01</span>
+            <h2>Residential<br>Closings</h2>
+          </div>
+          <div class="service-content-col">
+            <p>Whether you're buying, selling, or refinancing a home in Chicago or the suburbs, I handle every document, deadline, and detail so you can sign with complete confidence. A smooth closing isn't a luxury — it's what you deserve.</p>
+            <div class="service-tags">
+              <span class="stag">Purchase Closings</span>
+              <span class="stag">Sale Closings</span>
+              <span class="stag">Refinancing</span>
+              <span class="stag">Title Review</span>
+              <span class="stag">First-Time Buyers</span>
+            </div>
+          </div>
+        </div>
+        <div class="service-row reveal">
+          <div class="service-label-col">
+            <span class="service-num">02</span>
+            <h2>Real Estate<br>Investing</h2>
+          </div>
+          <div class="service-content-col">
+            <p>Building wealth through property takes legal precision at every step. I work with investors to structure acquisitions, review contracts, and close deals efficiently — protecting your interests from offer to deed. Whether it's your first rental or your fourteenth, the work gets my full attention.</p>
+            <div class="service-tags">
+              <span class="stag">Multi-Family Properties</span>
+              <span class="stag">Portfolio Closings</span>
+              <span class="stag">Investment Contracts</span>
+              <span class="stag">Due Diligence</span>
+              <span class="stag">1031 Exchanges</span>
+            </div>
+          </div>
+        </div>
+        <div class="service-row reveal">
+          <div class="service-label-col">
+            <span class="service-num">03</span>
+            <h2>Commercial<br>&amp; Leasing</h2>
+          </div>
+          <div class="service-content-col">
+            <p>Commercial transactions carry elevated complexity and risk. I bring careful attention to lease negotiation, commercial closings, and contract review — ensuring your business interests are protected with the same rigor as your personal ones. Don't sign anything commercial without an attorney in your corner.</p>
+            <div class="service-tags">
+              <span class="stag">Commercial Leasing</span>
+              <span class="stag">Lease Negotiation</span>
+              <span class="stag">Commercial Closings</span>
+              <span class="stag">Contract Review</span>
+              <span class="stag">Tenant Representation</span>
+            </div>
+          </div>
+        </div>
+        <div class="service-row reveal">
+          <div class="service-label-col">
+            <span class="service-num">04</span>
+            <h2>Contract<br>Review</h2>
+          </div>
+          <div class="service-content-col">
+            <p>Before you sign anything — a purchase agreement, lease, or offer letter — I'll review it line by line, explain what it actually means, and flag anything that puts you at risk. This is one of the highest-value things an attorney can do for you early in the process.</p>
+            <div class="service-tags">
+              <span class="stag">Purchase Agreements</span>
+              <span class="stag">Lease Review</span>
+              <span class="stag">Offer Letters</span>
+              <span class="stag">Addenda &amp; Riders</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="footer-col">
-        <h4>Areas Served</h4>
-        <ul>
-          <li><a href="#contact">Lincoln Park</a></li>
-          <li><a href="#contact">Wicker Park</a></li>
-          <li><a href="#contact">Logan Square</a></li>
-          <li><a href="#contact">River North</a></li>
-          <li><a href="#contact">South Loop</a></li>
-          <li><a href="#contact">All of Illinois</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Firm</h4>
-        <ul>
-          <li><a href="#about">About Camila</a></li>
-          <li><a href="#closings">Recent Closings</a></li>
-          <li><a href="#testimonials">Client Reviews</a></li>
-          <li><a href="#contact">Schedule a Consultation</a></li>
-          <li><a href="mailto:camila@kaplunovlaw.com">camila@kaplunovlaw.com</a></li>
-          <li><a href="tel:+13125550000">(312) 555-0000</a></li>
-        </ul>
+    </section>
+
+    <div class="services-cta">
+      <div class="container">
+        <h3>Not sure where your situation fits?</h3>
+        <p>Reach out and I'll point you in the right direction — no pressure, no commitment required.</p>
+        <a href="#" onclick="nav('contact')" class="btn-gold">Let's Talk</a>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span class="footer-copy">&copy; 2026 Kaplunov Law LLC · All Rights Reserved · Licensed in Illinois</span>
-      <div class="footer-legal">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Use</a>
-        <a href="#">Attorney Advertising Disclaimer</a>
+
+    <footer>
+      <div class="container">
+        <div class="footer-main">
+          <div class="footer-brand"><h3>Kaplunov Law</h3><p>Chicago Real Estate Attorney · Licensed in Illinois</p></div>
+          <nav class="footer-nav">
+            <a href="#" onclick="nav('about')">About Me</a>
+            <a href="#" onclick="nav('services')">How I Can Help</a>
+            <a href="#" onclick="nav('faq')">FAQ</a>
+            <a href="#" onclick="nav('work')">The Work</a>
+            <a href="#" onclick="nav('reviews')">What They Say</a>
+            <a href="#" onclick="nav('contact')">Contact</a>
+          </nav>
+        </div>
+        <div class="footer-bottom">
+          <span class="footer-copy">&copy; 2026 Kaplunov Law LLC · All Rights Reserved</span>
+          <div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Attorney Advertising Disclaimer</a></div>
+        </div>
       </div>
-    </div>
+    </footer>
   </div>
-</footer>
+</div>
 
-<!-- ============================================
+<!-- ==========================================
+     FAQ PAGE
+========================================== -->
+<div id="page-faq" class="page">
+  <div style="padding-top: var(--nav-h);">
+
+    <section class="faq-header">
+      <div class="container">
+        <span class="page-eyebrow">FAQ</span>
+        <h1>Questions<br>worth <em>asking.</em></h1>
+        <p>Everything buyers, sellers, and investors typically want to know — answered plainly, without the legal fog.</p>
+      </div>
+    </section>
+
+    <section style="padding: 0 0 0;">
+      <div class="container">
+        <div class="faq-list" id="faqList">
+
+          <div class="faq-item">
+            <div class="faq-q">
+              <span class="faq-q-text">Do I need a real estate attorney to close in Illinois?</span>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-a"><p>Yes — and not just because it's standard practice in Illinois. Having an attorney at closing means someone is reviewing every document, explaining what you're signing, and advocating for your interests in real time. Illinois is an attorney-state, meaning legal representation at closing is expected and essential for protecting yourself in one of the largest financial transactions of your life.</p></div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">
+              <span class="faq-q-text">What exactly does a real estate attorney do at closing?</span>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-a"><p>I review and explain every document before you sign, coordinate with your lender and the title company, resolve any title issues or last-minute problems, verify that funds are properly transferred, and make sure the transaction closes cleanly. You never have to wonder what you're signing — I'll explain it all in plain language.</p></div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">
+              <span class="faq-q-text">How much do your services cost?</span>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-a"><p>All services are priced at a flat rate — no hourly billing, no surprise fees at the closing table. You'll know the exact cost before we begin. Get in touch for a quote specific to your transaction type, and I'll give you a clear answer upfront.</p></div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">
+              <span class="faq-q-text">How soon before closing should I hire an attorney?</span>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-a"><p>As soon as you have a signed contract — ideally even before. The earlier you bring me in, the more time I have to review the contract, flag any concerns, and address potential issues before they become problems. Waiting until the week of closing limits what I can do for you. Earlier is always better.</p></div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">
+              <span class="faq-q-text">Do you only work in Chicago?</span>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-a"><p>I'm based in Chicago and most of my work is here, but I serve clients throughout Cook County and Northern Illinois — including Evanston, Oak Park, Naperville, and surrounding suburbs. If you're not sure whether your location is covered, just reach out and ask.</p></div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">
+              <span class="faq-q-text">Can you review my contract before I sign?</span>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-a"><p>Absolutely — and I strongly recommend it. Contract review is one of the highest-value services I offer. A purchase agreement, lease, or offer letter can contain terms that significantly impact your rights, your money, and your timeline. I'll go through it line by line, explain what it means, and flag anything that could put you at risk before you're legally bound.</p></div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">
+              <span class="faq-q-text">I'm investing in a multi-unit property. Is the process different?</span>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-a"><p>Investment transactions — especially multi-family properties — have additional layers that a standard residential closing doesn't: tenant leases, rent rolls, zoning considerations, estoppel certificates, and more. I handle these regularly and know exactly what to look for. The process is different, but it's well within what we do here every day.</p></div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">
+              <span class="faq-q-text">What happens if something goes wrong at or before closing?</span>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-a"><p>This is exactly why having an attorney matters. If title issues surface, the other party defaults, financing falls through, or any number of things go sideways — I'm there to navigate it, protect your position, and find a resolution. You're not alone dealing with a title company or the other side's attorney. I'm in your corner.</p></div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">
+              <span class="faq-q-text">How long does a real estate closing typically take in Illinois?</span>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-a"><p>For a standard residential purchase or sale, 30–45 days from signed contract to close is typical, though it depends on financing, inspections, and the other party's timeline. Cash transactions can close faster — sometimes in two weeks. I'll give you a realistic timeline based on your specific situation and keep you updated at every step.</p></div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">
+              <span class="faq-q-text">What's the difference between a buyer's attorney and a seller's attorney?</span>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-a"><p>In Illinois, both buyers and sellers typically have their own legal representation — and they should. Each attorney represents their own client's interests exclusively. As your attorney, I'm working for you, not for the transaction, the other party, or the title company. That distinction matters more than most people realize until something goes wrong.</p></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="faq-cta">
+      <div class="container">
+        <div class="faq-cta-inner">
+          <div>
+            <h3>Still have questions?</h3>
+            <p>I'm happy to answer anything that's on your mind — before you commit to anything.</p>
+          </div>
+          <a href="#" onclick="nav('contact')" class="btn-gold">Get In Touch</a>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="footer-main">
+          <div class="footer-brand"><h3>Kaplunov Law</h3><p>Chicago Real Estate Attorney · Licensed in Illinois</p></div>
+          <nav class="footer-nav">
+            <a href="#" onclick="nav('about')">About Me</a>
+            <a href="#" onclick="nav('services')">How I Can Help</a>
+            <a href="#" onclick="nav('faq')">FAQ</a>
+            <a href="#" onclick="nav('work')">The Work</a>
+            <a href="#" onclick="nav('reviews')">What They Say</a>
+            <a href="#" onclick="nav('contact')">Contact</a>
+          </nav>
+        </div>
+        <div class="footer-bottom">
+          <span class="footer-copy">&copy; 2026 Kaplunov Law LLC · All Rights Reserved</span>
+          <div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Attorney Advertising Disclaimer</a></div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<!-- ==========================================
+     THE WORK PAGE
+========================================== -->
+<div id="page-work" class="page">
+  <div style="padding-top: var(--nav-h);">
+
+    <section class="work-header">
+      <div class="container">
+        <div class="work-header-inner">
+          <div>
+            <span class="page-eyebrow">Selected Matters</span>
+            <h1>The<br><em>Work.</em></h1>
+          </div>
+          <div class="work-header-right">
+            <p>A selection of closed transactions — representing the range of clients and deals Kaplunov Law handles across Chicago and Northern Illinois.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="work-stats">
+      <div class="container">
+        <div class="work-stats-grid">
+          <div class="work-stat reveal">
+            <span class="work-stat-num">100+</span>
+            <span class="work-stat-label">Closings Completed</span>
+          </div>
+          <div class="work-stat reveal reveal-d1">
+            <span class="work-stat-num">$0</span>
+            <span class="work-stat-label">Surprise Fees, Ever</span>
+          </div>
+          <div class="work-stat reveal reveal-d2">
+            <span class="work-stat-num">IL</span>
+            <span class="work-stat-label">Licensed Statewide</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding: 48px 0 80px;">
+      <div class="container">
+
+        <!-- Filter tabs -->
+        <div class="work-filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="residential">Residential</button>
+          <button class="filter-btn" data-filter="investment">Investment</button>
+          <button class="filter-btn" data-filter="commercial">Commercial</button>
+        </div>
+
+        <!-- Deals grid -->
+        <div class="work-grid" id="dealsGrid">
+
+          <div class="deal-card" data-category="residential">
+            <span class="deal-type">Residential Purchase</span>
+            <div class="deal-price">$485,000</div>
+            <div class="deal-location">Lincoln Park, Chicago, IL</div>
+            <div class="deal-meta">
+              <span>3 Bed · 2 Bath</span>
+              <span>First-Time Buyer</span>
+            </div>
+          </div>
+
+          <div class="deal-card" data-category="investment">
+            <span class="deal-type">Investment Acquisition</span>
+            <div class="deal-price">$1,200,000</div>
+            <div class="deal-location">Logan Square, Chicago, IL</div>
+            <div class="deal-meta">
+              <span>6-Unit Multi-Family</span>
+              <span>Portfolio Expansion</span>
+            </div>
+          </div>
+
+          <div class="deal-card" data-category="residential">
+            <span class="deal-type">Residential Sale</span>
+            <div class="deal-price">$720,000</div>
+            <div class="deal-location">Wicker Park, Chicago, IL</div>
+            <div class="deal-meta">
+              <span>4 Bed · 3 Bath</span>
+              <span>Seller Representation</span>
+            </div>
+          </div>
+
+          <div class="deal-card" data-category="commercial">
+            <span class="deal-type">Commercial Lease</span>
+            <div class="deal-price">$8,400/mo</div>
+            <div class="deal-location">River North, Chicago, IL</div>
+            <div class="deal-meta">
+              <span>Retail Storefront</span>
+              <span>5-Year Term</span>
+            </div>
+          </div>
+
+          <div class="deal-card" data-category="residential">
+            <span class="deal-type">Condo Purchase</span>
+            <div class="deal-price">$310,000</div>
+            <div class="deal-location">South Loop, Chicago, IL</div>
+            <div class="deal-meta">
+              <span>2 Bed · 2 Bath</span>
+              <span>New Construction</span>
+            </div>
+          </div>
+
+          <div class="deal-card" data-category="investment">
+            <span class="deal-type">Investment Portfolio</span>
+            <div class="deal-price">$2,100,000</div>
+            <div class="deal-location">Pilsen &amp; Bridgeport, IL</div>
+            <div class="deal-meta">
+              <span>3-Property Acquisition</span>
+              <span>Multi-Family</span>
+            </div>
+          </div>
+
+          <div class="deal-card" data-category="residential">
+            <span class="deal-type">Condo Sale</span>
+            <div class="deal-price">$395,000</div>
+            <div class="deal-location">Bucktown, Chicago, IL</div>
+            <div class="deal-meta">
+              <span>2 Bed · 2 Bath</span>
+              <span>Seller Representation</span>
+            </div>
+          </div>
+
+          <div class="deal-card" data-category="commercial">
+            <span class="deal-type">Commercial Purchase</span>
+            <div class="deal-price">$875,000</div>
+            <div class="deal-location">West Loop, Chicago, IL</div>
+            <div class="deal-meta">
+              <span>Mixed-Use Building</span>
+              <span>Owner-Occupied</span>
+            </div>
+          </div>
+
+          <div class="deal-card" data-category="investment">
+            <span class="deal-type">Investment Purchase</span>
+            <div class="deal-price">$540,000</div>
+            <div class="deal-location">Hyde Park, Chicago, IL</div>
+            <div class="deal-meta">
+              <span>3-Unit Multi-Family</span>
+              <span>First Investment</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Instagram Strip -->
+    <div class="work-instagram">
+      <div class="container">
+        <div class="work-instagram-inner">
+          <div class="work-ig-text">
+            <h4>Follow along in real time.</h4>
+            <p>New closings, deal highlights, and behind-the-scenes moments shared regularly. Every post is a real transaction, a real client, a real win.</p>
+            <span class="ig-handle">
+              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              @kaplunovlaw
+            </span>
+          </div>
+          <a href="https://instagram.com/kaplunovlaw" target="_blank" rel="noopener" class="btn-outline">Follow on Instagram</a>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="footer-main">
+          <div class="footer-brand"><h3>Kaplunov Law</h3><p>Chicago Real Estate Attorney · Licensed in Illinois</p></div>
+          <nav class="footer-nav">
+            <a href="#" onclick="nav('about')">About Me</a>
+            <a href="#" onclick="nav('services')">How I Can Help</a>
+            <a href="#" onclick="nav('faq')">FAQ</a>
+            <a href="#" onclick="nav('work')">The Work</a>
+            <a href="#" onclick="nav('reviews')">What They Say</a>
+            <a href="#" onclick="nav('contact')">Contact</a>
+          </nav>
+        </div>
+        <div class="footer-bottom">
+          <span class="footer-copy">&copy; 2026 Kaplunov Law LLC · All Rights Reserved</span>
+          <div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Attorney Advertising Disclaimer</a></div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<!-- ==========================================
+     WHAT THEY SAY / REVIEWS PAGE
+========================================== -->
+<div id="page-reviews" class="page">
+  <div style="padding-top: var(--nav-h);">
+
+    <section class="reviews-header">
+      <div class="container">
+        <span class="page-eyebrow">Testimonials</span>
+        <h1>What<br><em>They Say.</em></h1>
+        <p>From first-time buyers to seasoned investors — in their own words.</p>
+      </div>
+    </section>
+
+    <!-- Featured review -->
+    <section class="review-featured">
+      <div class="container">
+        <div class="review-featured-inner">
+          <div class="review-stars">
+            <div class="star"></div><div class="star"></div><div class="star"></div>
+            <div class="star"></div><div class="star"></div>
+          </div>
+          <blockquote>
+            "I've worked with other real estate attorneys and the difference with Kaplunov Law is immediately obvious. Camila is sharp, responsive, and genuinely invested in the outcome of your deal. She caught issues in my contract that could have cost me tens of thousands. Worth every penny."
+          </blockquote>
+          <div class="review-author">
+            <span class="review-author-name">Daniel R.</span>
+            <span class="review-author-context">Investment Acquisition · Logan Square</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews grid -->
+    <section class="reviews-grid-section">
+      <div class="container">
+        <div class="reviews-grid">
+
+          <div class="review-card reveal">
+            <div class="review-stars">
+              <div class="star"></div><div class="star"></div><div class="star"></div>
+              <div class="star"></div><div class="star"></div>
+            </div>
+            <blockquote>"Camila made our first home purchase feel completely manageable. She explained every document in plain language and we never felt like we were in the dark. I can't imagine going through a closing without her."</blockquote>
+            <div class="review-author">
+              <span class="review-author-name">Marcus &amp; Priya T.</span>
+              <span class="review-author-context">Residential Purchase · Lincoln Park</span>
+            </div>
+          </div>
+
+          <div class="review-card reveal reveal-d1">
+            <div class="review-stars">
+              <div class="star"></div><div class="star"></div><div class="star"></div>
+              <div class="star"></div><div class="star"></div>
+            </div>
+            <blockquote>"As a small business owner signing my first commercial lease, I was intimidated by the process. Camila walked me through everything, negotiated terms I didn't even know I could push back on, and made sure I understood exactly what I was signing."</blockquote>
+            <div class="review-author">
+              <span class="review-author-name">Sofia M.</span>
+              <span class="review-author-context">Commercial Lease · River North</span>
+            </div>
+          </div>
+
+          <div class="review-card reveal reveal-d2">
+            <div class="review-stars">
+              <div class="star"></div><div class="star"></div><div class="star"></div>
+              <div class="star"></div><div class="star"></div>
+            </div>
+            <blockquote>"Camila handled my multi-unit acquisition with exactly the professionalism I needed. She was proactive, thorough, and always a step ahead. This was my fourth investment property and she's my attorney going forward."</blockquote>
+            <div class="review-author">
+              <span class="review-author-name">James K.</span>
+              <span class="review-author-context">Multi-Family Investment · Pilsen</span>
+            </div>
+          </div>
+
+          <div class="review-card reveal">
+            <div class="review-stars">
+              <div class="star"></div><div class="star"></div><div class="star"></div>
+              <div class="star"></div><div class="star"></div>
+            </div>
+            <blockquote>"What stood out was how available she was. Every question I had got a real, timely response — not a voicemail or a paralegal. That level of access made an incredibly stressful process feel manageable."</blockquote>
+            <div class="review-author">
+              <span class="review-author-name">Alicia D.</span>
+              <span class="review-author-context">Condo Purchase · South Loop</span>
+            </div>
+          </div>
+
+          <div class="review-card reveal reveal-d1">
+            <div class="review-stars">
+              <div class="star"></div><div class="star"></div><div class="star"></div>
+              <div class="star"></div><div class="star"></div>
+            </div>
+            <blockquote>"Transparent, fast, and no-nonsense. Camila told me exactly what I was paying upfront, handled everything without me having to chase her down, and closed our deal on time. Exactly what you want from a real estate attorney."</blockquote>
+            <div class="review-author">
+              <span class="review-author-name">Trevor &amp; Naomi H.</span>
+              <span class="review-author-context">Home Sale · Wicker Park</span>
+            </div>
+          </div>
+
+          <div class="review-card reveal reveal-d2">
+            <div class="review-stars">
+              <div class="star"></div><div class="star"></div><div class="star"></div>
+              <div class="star"></div><div class="star"></div>
+            </div>
+            <blockquote>"I came in nervous about the investment side of real estate law. Camila made it click. She explained the due diligence process, reviewed the leases on my 6-unit, and handled the closing flawlessly. I'll be back for the next one."</blockquote>
+            <div class="review-author">
+              <span class="review-author-name">Marcus W.</span>
+              <span class="review-author-context">Investment Acquisition · Logan Square</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="reviews-cta">
+      <div class="container">
+        <h3>Had a great experience?</h3>
+        <p>Your review helps other buyers and investors find the representation they deserve.</p>
+        <a href="https://g.page/r/kaplunovlaw/review" target="_blank" rel="noopener" class="btn-gold">Leave a Google Review</a>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="footer-main">
+          <div class="footer-brand"><h3>Kaplunov Law</h3><p>Chicago Real Estate Attorney · Licensed in Illinois</p></div>
+          <nav class="footer-nav">
+            <a href="#" onclick="nav('about')">About Me</a>
+            <a href="#" onclick="nav('services')">How I Can Help</a>
+            <a href="#" onclick="nav('faq')">FAQ</a>
+            <a href="#" onclick="nav('work')">The Work</a>
+            <a href="#" onclick="nav('reviews')">What They Say</a>
+            <a href="#" onclick="nav('contact')">Contact</a>
+          </nav>
+        </div>
+        <div class="footer-bottom">
+          <span class="footer-copy">&copy; 2026 Kaplunov Law LLC · All Rights Reserved</span>
+          <div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Attorney Advertising Disclaimer</a></div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<!-- ==========================================
+     CONTACT PAGE
+========================================== -->
+<div id="page-contact" class="page">
+  <div style="padding-top: var(--nav-h);">
+    <div class="contact-split">
+
+      <div class="contact-left">
+        <span class="page-eyebrow">Get In Touch</span>
+        <h1>Let's talk<br>about your<br><em>next move.</em></h1>
+        <p>I personally respond to every inquiry within one business day. No sales pressure — just a real conversation.</p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.79 19.79 19.79 0 010 2a2 2 0 012-2h3.18a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 6.25A16 16 0 0015.73 15.07l.62-.62a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div>
+              <span class="contact-item-label">Phone</span>
+              <div class="contact-item-val"><a href="tel:+13125550000">(312) 555-0000</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <span class="contact-item-label">Email</span>
+              <div class="contact-item-val"><a href="mailto:camila@kaplunovlaw.com">camila@kaplunovlaw.com</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <span class="contact-item-label">Location</span>
+              <div class="contact-item-val">Chicago, Illinois<br>Serving all of Cook County &amp; Northern IL</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <span class="contact-item-label">Hours</span>
+              <div class="contact-item-val">Mon – Fri: 9am – 6pm<br>Flexible consultations available</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-right">
+        <span class="page-eyebrow">Consultation Request</span>
+        <h3>Tell me about your matter</h3>
+        <p>Fill out the form below and I'll be in touch to find a time that works.</p>
+        <form onsubmit="return false;">
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" placeholder="First name">
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" placeholder="Last name">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" placeholder="your@email.com">
+            </div>
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="tel" placeholder="(312) 000-0000">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Type of Matter</label>
+            <select>
+              <option value="" disabled selected>Select a service</option>
+              <option>Residential Purchase Closing</option>
+              <option>Residential Sale Closing</option>
+              <option>Real Estate Investment / Multi-Family</option>
+              <option>Commercial Lease</option>
+              <option>Contract Review</option>
+              <option>Refinancing</option>
+              <option>Other / Not Sure Yet</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Tell Me More</label>
+            <textarea placeholder="A brief description — property type, location, timeline, and any questions you already have."></textarea>
+          </div>
+          <div class="form-submit">
+            <button type="submit" class="btn-gold-full">Send Inquiry</button>
+          </div>
+          <p class="form-note">All inquiries are confidential. I personally read every submission and respond within one business day.</p>
+        </form>
+      </div>
+
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="footer-main">
+          <div class="footer-brand"><h3>Kaplunov Law</h3><p>Chicago Real Estate Attorney · Licensed in Illinois</p></div>
+          <nav class="footer-nav">
+            <a href="#" onclick="nav('about')">About Me</a>
+            <a href="#" onclick="nav('services')">How I Can Help</a>
+            <a href="#" onclick="nav('faq')">FAQ</a>
+            <a href="#" onclick="nav('work')">The Work</a>
+            <a href="#" onclick="nav('reviews')">What They Say</a>
+            <a href="#" onclick="nav('contact')">Contact</a>
+          </nav>
+        </div>
+        <div class="footer-bottom">
+          <span class="footer-copy">&copy; 2026 Kaplunov Law LLC · All Rights Reserved</span>
+          <div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Attorney Advertising Disclaimer</a></div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<!-- ==========================================
      JAVASCRIPT
-============================================= -->
+========================================== -->
 <script>
-  // ----- NAV SCROLL BEHAVIOR -----
-  var nav = document.getElementById('nav');
-  function handleScroll() {
-    if (window.scrollY > 60) {
-      nav.classList.add('scrolled');
-      nav.classList.remove('dark-nav');
-    } else {
-      nav.classList.remove('scrolled');
-      nav.classList.add('dark-nav');
-    }
-  }
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  handleScroll();
+// ---- SPA ROUTER ----
+var currentPage = 'home';
 
-  // ----- MOBILE MENU -----
-  var toggle = document.getElementById('navToggle');
-  var mobileMenu = document.getElementById('mobileMenu');
-  var menuOpen = false;
-  toggle.addEventListener('click', function() {
-    menuOpen = !menuOpen;
-    mobileMenu.classList.toggle('open', menuOpen);
+function nav(pageId, e) {
+  if (e) e.preventDefault();
+
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(function(p) {
+    p.classList.remove('active');
   });
-  function closeMobile() {
-    menuOpen = false;
-    mobileMenu.classList.remove('open');
+
+  // Show target page
+  var target = document.getElementById('page-' + pageId);
+  if (target) {
+    target.classList.add('active');
+    currentPage = pageId;
   }
 
-  // ----- REVEAL ON SCROLL -----
-  var reveals = document.querySelectorAll('.reveal');
+  // Update active nav links
+  document.querySelectorAll('[data-page]').forEach(function(a) {
+    a.classList.toggle('active', a.dataset.page === pageId);
+  });
+
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'instant' });
+
+  // Trigger reveal animations for new page
+  setTimeout(triggerReveals, 50);
+
+  return false;
+}
+
+// ---- MOBILE MENU ----
+var menuOpen = false;
+var toggle = document.getElementById('navToggle');
+var mobileMenu = document.getElementById('mobileMenu');
+
+toggle.addEventListener('click', function() {
+  menuOpen = !menuOpen;
+  mobileMenu.classList.toggle('open', menuOpen);
+  toggle.classList.toggle('open', menuOpen);
+});
+
+function closeMobile() {
+  menuOpen = false;
+  mobileMenu.classList.remove('open');
+  toggle.classList.remove('open');
+}
+
+// ---- FAQ ACCORDION ----
+document.querySelectorAll('.faq-q').forEach(function(q) {
+  q.addEventListener('click', function() {
+    var item = this.parentElement;
+    var isOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.faq-item').forEach(function(i) {
+      i.classList.remove('open');
+    });
+    // Open clicked if it wasn't open
+    if (!isOpen) item.classList.add('open');
+  });
+});
+
+// ---- WORK FILTER ----
+document.querySelectorAll('.filter-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var filter = this.dataset.filter;
+    // Update active button
+    document.querySelectorAll('.filter-btn').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    this.classList.add('active');
+    // Show/hide cards
+    document.querySelectorAll('.deal-card').forEach(function(card) {
+      if (filter === 'all' || card.dataset.category === filter) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+});
+
+// ---- REVEAL ANIMATIONS ----
+function triggerReveals() {
+  var reveals = document.querySelectorAll('.page.active .reveal');
   var observer = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
@@ -1946,13 +2614,33 @@ footer {
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-  reveals.forEach(function(el) { observer.observe(el); });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+  reveals.forEach(function(el) {
+    el.classList.remove('visible');
+    observer.observe(el);
+  });
+}
 
-  // ----- HERO ELEMENTS TRIGGER IMMEDIATELY -----
-  document.querySelectorAll('#hero .reveal').forEach(function(el) {
+// Init reveals on load
+window.addEventListener('load', function() {
+  triggerReveals();
+  // Immediately show hero content
+  document.querySelectorAll('#page-home .home-hero .reveal').forEach(function(el) {
     el.classList.add('visible');
   });
+});
+
+// Also trigger on scroll
+window.addEventListener('scroll', triggerReveals, { passive: true });
+
+// Handle hash routing
+window.addEventListener('load', function() {
+  var hash = window.location.hash.replace('#', '');
+  var validPages = ['home','about','services','faq','work','reviews','contact'];
+  if (hash && validPages.includes(hash)) {
+    nav(hash);
+  }
+});
 </script>
 
 </body>
